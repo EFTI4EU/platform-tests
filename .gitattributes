@@ -1,0 +1,6 @@
+# Many files run or are processed line by line inside Linux containers and by tst.sh, or are sent as they are
+# (shell scripts, DDL, runner configuration, PModes, templates), so every text file keeps LF line endings in a
+# Windows checkout too.
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.p12 binary

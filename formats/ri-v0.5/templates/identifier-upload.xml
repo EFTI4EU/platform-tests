@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<saveIdentifiersRequest xmlns="http://efti.eu/v1/edelivery" requestId="{{requestId}}" datasetId="{{datasetId}}">
+  {{{identifiers}}}
+</saveIdentifiersRequest>

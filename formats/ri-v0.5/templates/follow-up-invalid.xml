@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fault injection: all references present, but the mandatory message text is missing -->
+<postFollowUpRequest xmlns="http://efti.eu/v1/edelivery" requestId="{{requestId}}" uilQueryRequestId="{{referencedRequestId}}">
+  <uil>
+    <gateId>{{gateId}}</gateId>
+    <platformId>{{platformId}}</platformId>
+    <datasetId>{{datasetId}}</datasetId>
+  </uil>
+</postFollowUpRequest>

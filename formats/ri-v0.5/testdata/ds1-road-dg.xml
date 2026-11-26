@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DS1-DG: DS1 with dangerous goods on board (UN 1263 paint in steel drums, ADR).
+  Subsets EU01, EU02, EU05a. Mode of transport: road (3). All data are fictitious.
+-->
+<consignment xmlns="http://efti.eu/v1/consignment/common">
+  <carrierAcceptanceDateTime formatId="205">202609150800+0200</carrierAcceptanceDateTime>
+  <carrierAcceptanceLocation>
+    <postalAddress>
+      <additionalStreetName>Gate 3</additionalStreetName>
+      <buildingNumber>7</buildingNumber>
+      <cityName>Leipzig</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Sachsen</countrySubDivisionName>
+      <postcode>04109</postcode>
+      <streetName>TST Synthetic Logistikpark Südring</streetName>
+    </postalAddress>
+  </carrierAcceptanceLocation>
+  <consignee>
+    <name>TST Synthetic Consignee Logistica</name>
+    <postalAddress>
+      <buildingNumber>42</buildingNumber>
+      <cityName>Verona</cityName>
+      <countryCode>IT</countryCode>
+      <postcode>37135</postcode>
+      <streetName>Via Sintetica</streetName>
+    </postalAddress>
+  </consignee>
+  <consigneeReceiptLocation>
+    <postalAddress>
+      <additionalStreetName>Rampa 5</additionalStreetName>
+      <buildingNumber>42</buildingNumber>
+      <cityName>Verona</cityName>
+      <countryCode>IT</countryCode>
+      <countrySubDivisionName>Veneto</countrySubDivisionName>
+      <postcode>37135</postcode>
+      <streetName>Via Sintetica</streetName>
+    </postalAddress>
+  </consigneeReceiptLocation>
+  <consignor>
+    <name>TST Synthetic Consignor &amp; Söhne OHG</name>
+    <postalAddress>
+      <additionalStreetName>Gate 3</additionalStreetName>
+      <buildingNumber>7</buildingNumber>
+      <cityName>Leipzig</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Sachsen</countrySubDivisionName>
+      <departmentName>TST Synthetic Shipping Department 1</departmentName>
+      <postOfficeBox>PF 1007</postOfficeBox>
+      <postcode>04109</postcode>
+      <streetName>TST Synthetic Logistikpark Südring</streetName>
+    </postalAddress>
+  </consignor>
+  <grossWeight unitId="KGM">12500</grossWeight>
+  <includedConsignmentItem>
+    <transportDangerousGoods>
+      <dangerousGoodsLogisticsPackage>
+        <itemQuantity>12</itemQuantity>
+        <shippingMarks>
+          <markingText>3</markingText>
+        </shippingMarks>
+        <typeText>Steel drum</typeText>
+      </dangerousGoodsLogisticsPackage>
+      <grossWeight unitId="KGM">420</grossWeight>
+      <packagingDangerLevelCode>II</packagingDangerLevelCode>
+      <tunnelRestrictionCode>D/E</tunnelRestrictionCode>
+      <uNDGID>1263</uNDGID>
+    </transportDangerousGoods>
+  </includedConsignmentItem>
+  <mainCarriageTransportMovement>
+    <dangerousGoodsIndicator>true</dangerousGoodsIndicator>
+    <modeCode>3</modeCode>
+    <sequenceNumber>1</sequenceNumber>
+    <unloadingEvent>
+      <certifyingParty>
+        <confirmedDocumentAuthentication>
+          <statementCode>1</statementCode>
+        </confirmedDocumentAuthentication>
+        <name>TST Synthetic Rail Authority Leipzig</name>
+        <roleCode>T1</roleCode>
+      </certifyingParty>
+      <occurrenceLocation>
+        <name>TST Synthetic KV-Terminal Leipzig</name>
+      </occurrenceLocation>
+      <scheduledOccurrenceDateTime formatId="102">20260915</scheduledOccurrenceDateTime>
+    </unloadingEvent>
+    <usedTransportMeans>
+      <id>BAB132</id>
+      <registrationCountry>
+        <code>DE</code>
+      </registrationCountry>
+    </usedTransportMeans>
+  </mainCarriageTransportMovement>
+  <transportContractDocument>
+    <typeCode>730</typeCode>
+  </transportContractDocument>
+  <usedTransportEquipment>
+    <carriedTransportEquipment>
+      <categoryCode>SW</categoryCode>
+      <id>TSTA4711230</id>
+      <sequenceNumber>1</sequenceNumber>
+    </carriedTransportEquipment>
+    <categoryCode>SM</categoryCode>
+    <id>LTC4711T</id>
+    <registrationCountry>
+      <code>DE</code>
+    </registrationCountry>
+    <sequenceNumber>1</sequenceNumber>
+  </usedTransportEquipment>
+</consignment>

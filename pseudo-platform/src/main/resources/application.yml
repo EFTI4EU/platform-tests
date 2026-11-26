@@ -1,0 +1,18 @@
+# Defaults for a run on the host against the local stack (deploy/), started from pseudo-platform/.
+# Every setting can be overridden by an environment variable, e.g. PLATFORM_WS_PLUGIN_URL.
+platform:
+  ws-plugin-url: http://localhost:18080/domibus/services/wsplugin
+  ws-plugin-user: pseudoplatform_ws
+  ws-plugin-password: test123
+  own-party-id: pseudoplatform
+  gate-party-id: tstgate
+  format-dir: ../formats/ri-v0.5
+  poll-interval: 1s
+
+server:
+  port: 18090
+  servlet:
+    session:
+      # Without this, Tomcat appends ";jsessionid=..." to the redirect after the first form post (flash attributes
+      # create the session), which no controller mapping matches.
+      tracking-modes: cookie

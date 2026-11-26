@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DS4: synthetic air cargo consignment with a security status issued by a regulated agent after X-ray screening.
+  Subset EU06. Mode of transport: air (4). No dangerous goods. All data are fictitious.
+-->
+<consignment xmlns="http://efti.eu/v1/consignment/common">
+  <carrierAcceptanceDateTime formatId="205">202609150800+0200</carrierAcceptanceDateTime>
+  <logisticsRiskAnalysisResult>
+    <consignmentRiskRelatedCode>SPX</consignmentRiskRelatedCode>
+    <levelCode>RA</levelCode>
+    <screeningMethodCode>XRY</screeningMethodCode>
+  </logisticsRiskAnalysisResult>
+  <mainCarriageTransportMovement>
+    <dangerousGoodsIndicator>false</dangerousGoodsIndicator>
+    <modeCode>4</modeCode>
+    <usedTransportMeans>
+      <id>D-ASTT</id>
+      <registrationCountry>
+        <code>DE</code>
+      </registrationCountry>
+    </usedTransportMeans>
+  </mainCarriageTransportMovement>
+  <natureIdentificationCargo>
+    <identificationText>Machine spare parts in cardboard boxes, air cargo. Free-text element filled to its maximum length of 512 characters for the round-trip test, padded with digits: 012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890</identificationText>
+  </natureIdentificationCargo>
+  <transportContractDocument>
+    <id>999-47110012</id>
+    <typeCode>741</typeCode>
+  </transportContractDocument>
+  <transportEvent>
+    <certifyingParty>
+      <authoritativeSignatoryPerson>
+        <name>TST Synthetic Security Officer Jörg</name>
+      </authoritativeSignatoryPerson>
+      <confirmedDocumentAuthentication>
+        <actualDateTime formatId="203">202609150730</actualDateTime>
+      </confirmedDocumentAuthentication>
+      <id>DE/RA/04711-01</id>
+    </certifyingParty>
+  </transportEvent>
+</consignment>

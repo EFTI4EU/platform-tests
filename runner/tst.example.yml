@@ -1,0 +1,27 @@
+# Example run configuration for the local stack (deploy/) and the pseudo platform.
+# Relative paths are resolved against the folder of this file. Credentials are the local test users only.
+
+formatDir: ../formats/ri-v0.5
+outputDir: target/tst-report
+
+# WS plugin of the gate's Domibus domain
+domibus:
+  url: http://localhost:18080/domibus/services/wsplugin
+  user: tstgate_ws
+  password: test123
+  partyId: tstgate
+
+gate:
+  id: tstgate                 # gate identifier used in UILs
+
+platform:
+  partyId: pseudoplatform     # AS4 party ID of the platform's access point
+  id: pseudoplatform          # registered platform identifier used in UILs
+
+report:
+  platformName: Pseudo platform
+  platformVersion: 0.1.0-SNAPSHOT
+  company: Musterfracht GmbH (test environment)
+
+# The test data sets to run, in this order (see testdata/README.md); sh tst.sh run <partyId> <keys> overrides them for one run.
+datasets: [DS1]

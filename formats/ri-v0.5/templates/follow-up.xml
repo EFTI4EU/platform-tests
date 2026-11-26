@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<postFollowUpRequest xmlns="http://efti.eu/v1/edelivery" requestId="{{requestId}}" uilQueryRequestId="{{referencedRequestId}}">
+  <uil>
+    <gateId>{{gateId}}</gateId>
+    <platformId>{{platformId}}</platformId>
+    <datasetId>{{datasetId}}</datasetId>
+  </uil>
+  <message>{{message}}</message>
+</postFollowUpRequest>

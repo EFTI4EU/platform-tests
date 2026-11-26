@@ -1,0 +1,31 @@
+# Runner configuration for the pseudo platform, used by the runner container (sh tst.sh run).
+# Paths are inside the container: the repository's formats/ and testdata/ are under /app,
+# deploy/reports/ is mounted at /reports. Credentials are the local test users only.
+# tst.sh onboard derives the configuration of an onboarded platform from this file by replacing the
+# platform-specific values (platform:, report:, outputDir).
+
+formatDir: /app/formats/ri-v0.5
+outputDir: /reports/pseudoplatform
+
+# WS plugin of the gate's Domibus domain
+domibus:
+  url: http://domibus:8080/domibus/services/wsplugin
+  user: tstgate_ws
+  password: test123
+  partyId: tstgate
+
+gate:
+  id: tstgate                 # gate identifier used in UILs
+
+platform:
+  partyId: pseudoplatform     # AS4 party ID of the platform's access point
+  id: pseudoplatform          # registered platform identifier used in UILs
+
+report:
+  platformName: Pseudo platform
+  platformVersion: 0.1.0-SNAPSHOT
+  company: Musterfracht GmbH (test environment)
+
+# The test data sets to run, in this order (see testdata/README.md); sh tst.sh run <partyId> <keys> overrides them for one run.
+# With a single data set, T-NEG-10 (a follow-up mixing two data sets) is not applicable.
+datasets: [DS1]

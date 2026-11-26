@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checklist of Platform-Internal eFTI Requirements</title>
+<style>
+  :root {
+    --ink: #1c2733; --muted: #6b7885; --line: #e2e6ea; --bg: #f6f7f9;
+    --card: #fff; --accent: #3470ac; --note-bg: #d0e0f0; --note-line: #3470ac;
+    --warn-bg: #fdf1b9; --warn-line: #f4d01c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         color: var(--ink); background: var(--bg); }
+  .page { max-width: 850px; margin: 0 auto; padding: 40px 24px 80px; background: var(--card); }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .subtitle { color: var(--muted); margin: 0 0 28px; font-size: 15px; }
+  h2 { font-size: 18px; margin: 18px 0 10px; }
+  hr { border: 0; border-top: 2px solid var(--line); margin: 36px 0 0; }
+  h2 .num { color: var(--accent); margin-right: 8px; }
+  h3 { font-size: 15px; margin: 26px 0 4px; }
+  h3 .gid { color: var(--accent); margin-right: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  p { margin: 10px 0; }
+  ul, ol { margin: 8px 0; padding-left: 22px; }
+  li { margin: 5px 0; }
+  .ref { font-size: 13px; color: var(--muted); }
+  .note, .warn { border-radius: 8px; padding: 12px 16px; margin: 14px 0; font-size: 14px; }
+  .note { background: var(--note-bg); border: 1px solid var(--note-line); }
+  .warn { background: var(--warn-bg); border: 1px solid var(--warn-line); }
+  .checklist { margin-top: 16px; }
+  .check-group { border: 2px solid var(--note-line); border-radius: 10px; padding: 4px 12px; margin: 12px 0; }
+  .or-divider { display: flex; align-items: center; gap: 16px; margin: 18px 0; font-size: 22px;
+                font-weight: 800; letter-spacing: 2px; color: var(--accent); }
+  .or-divider::before, .or-divider::after { content: ""; flex: 1; border-top: 2px solid var(--line); }
+  .check-item { display: flex; gap: 14px; align-items: flex-start; border: 1px solid var(--line);
+                border-radius: 8px; padding: 16px; margin: 12px 0; }
+  .check-item input[type=checkbox] { width: 22px; height: 22px; margin-top: 2px; flex: none;
+                                     accent-color: var(--accent); }
+  .check-item b { display: block; margin-bottom: 4px; }
+  .check-item b .id { color: var(--accent); font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+                      font-size: 12.5px; margin-right: 8px; font-weight: 600; }
+  .check-item ul { margin: 4px 0 0; padding-left: 20px; }
+  .check-item li { margin: 4px 0; }
+  .check-item .iref { display: flex; flex-wrap: wrap; gap: 2px 16px;
+                      font-size: 12.5px; color: var(--muted); margin-top: 6px; }
+  .check-item .iref .dref { color: var(--accent); margin-left: auto; flex-shrink: 0; max-width: 100%; }
+  footer { margin-top: 48px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line);
+           padding-top: 12px; }
+  @media print {
+    body { background: #fff; zoom: .8; }
+    .page { padding: 0; max-width: none; }
+    .note, .warn, .check-item input[type=checkbox] { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    h2, h3 { break-after: avoid; }
+    .check-item, .note, .warn { break-inside: avoid; }
+    .or-divider { break-after: avoid; }
+    hr { break-before: avoid; }
+    .check-group:only-child { border: 0; padding: 0; }
+    .check-group { -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Checklist of Platform-Internal eFTI Requirements</h1>
+<p class="subtitle">An informative checklist for eFTI platform operators, i.e. the eFTI service providers and economic
+operators legally responsible for the appropriate functioning of an eFTI platform (Art. 2(4) of Impl. Reg. (EU) 2025/2243),
+and for the developers of their platforms.</p>
+
+<hr>
+<h2><span class="num">1</span>Purpose and scope</h2>
+<p>
+An eFTI platform has to meet the requirements of Implementing Regulation (EU) 2025/2243 and of Regulation (EU)
+2020/1056 (the eFTI Regulation). What is observable via the machine-to-machine interface to an eFTI Gate (secure
+connection, registration of identifiers, data conformance, request/response cycles, and follow-up communication) can be checked by the automated test suite of this repository (see the <a href="https://github.com/EFTI4EU/platform-tests/blob/main/docs/testcase-description.md">test case description</a>).
+</p>
+<p>
+This checklist lists <b>all other requirements, which cannot be tested from the outside</b>: user identification and
+management, user-facing functions, signatures, logging, storage, retention and deletion, transparency duties, and
+organisational obligations.
+</p>
+<div class="warn">
+<b>Informative only:</b> this checklist is an unofficial reading aid for the platform operator's own review. It does
+not replace the legal texts, and nobody verifies the ticked items. Responsibility for meeting the requirements
+remains entirely with the platform operator.
+</div>
+
+<hr>
+<h2><span class="num">2</span>How to read this checklist</h2>
+<ul>
+  <li>The checklist is grouped by feature area as you would implement it (connections, user
+      management, data set handling, logging, storage, notifications, user interface, and DIWASS).</li>
+  <li>The reference line of each item names the underlying legal provisions and, as "Draft DA: R-…", the corresponding
+      <b>specified requirements of Annex I of the draft delegated act on the certification of eFTI platforms</b>
+      (draft of 21 October 2026 on the EU's "Have Your Say" platform); the <a href="requirements-map.html">requirements map</a> shows this mapping at a
+      glance. Draft requirements not referenced by any item (R-G1-03,
+      R-G2-02 to -05 and -07, R-G4-04 (except (iii), see LOG-01), R-G4-10, R-G4-11 (except (iii), (iv), see LOG-01),
+      the Gate-observable parts of R-G4-12, and the Part C data requirements R-D1 to R-D3) are covered
+      by the automated test suite instead; items without a "Draft DA:" reference have no
+      counterpart in the draft, which focuses on the platform software, and are mainly relevant for service providers.</li>
+  <li>Article references without further specification refer to <b>Implementing Regulation (EU)
+      2025/2243</b> (technical specifications for eFTI platforms); "Annex" means its Annex.</li>
+</ul>
+
+<hr>
+<h2><span class="num">3</span>Checklist</h2>
+
+<h3><span class="gid">CON</span>Secure connections to external systems</h3>
+<div class="checklist"><div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="con-1"><label for="con-1">
+      <b><span class="id">CON-01</span>Conformant eDelivery AS4 solution</b>
+      The connection to the eFTI Gate is operated with an eDelivery Access Point compliant with the
+      eDelivery message exchange specifications (Art. 12(1)(a)), configured according to the eFTI eDelivery
+      profile (TGD Annex 1 ch. 3, guidance). The automated test suite of this repository presupposes that this Access Point is an
+      <a href="https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/pages/467110150/eDelivery+AS4+conformant+solutions">eDelivery AS4 conformant solution</a>, i.e. one
+      listed by the European Commission as having passed the eDelivery AS4 conformance testing: the
+      standard AS4 security and reliability functions (message signing and encryption, validation and
+      rejection of unsigned or tampered messages and of messages signed with expired, revoked, or untrusted
+      keys or certificates, rejection of malformed AS4 envelopes, signed receipts, retransmission when a
+      receipt is missing, and duplicate detection) are then provided by that solution and are not
+      re-tested by the test suite. Since these functions depend on the deployment, the
+      Access Point is in addition configured as follows:
+      <ul>
+        <li>it trusts only the trust anchors of the eFTI eDelivery setup and checks the validity and
+            revocation status of the eFTI Gate's certificates;</li>
+        <li>messages that fail authentication are answered with an AS4 error signal, as set in the eFTI
+            P-Mode (error reporting as response; TGD Annex 1 ch. 3, guidance);</li>
+        <li>its TLS and AS4 message-level security configuration (signature, encryption, and key transport)
+            accepts only the cryptographic algorithms of the eFTI eDelivery profile; outdated algorithms
+            and protocol versions are rejected.</li>
+      </ul>
+      The security keys or security certificates of the eFTI
+      Gate are received, recorded, retrieved, and validated using secure procedures and protocols, and the
+      stored credentials are protected against unauthorised access. The dynamic discovery mechanism of
+      eDelivery (SML/SMP; Art. 12(3); Impl. Reg. (EU) 2024/1942 Art. 9(3)) is not considered here yet.
+      <span class="iref">Art. 3(1), (2)(a); Art. 12(1), (3); Impl. Reg. (EU) 2024/1942 Art. 9(3); TGD Annex 1 ch. 3 (guidance)<span class="dref">Draft DA: R-G1-01, R-G1-02a, R-G1-02b, R-G2-01</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="con-2"><label for="con-2">
+      <b><span class="id">CON-02</span>Tributary and external ICT systems</b>
+      For connections to tributary and other external ICT systems (including an externally hosted
+      authorisation registry):
+      <ul>
+        <li>connections are made via access points with valid security keys or security
+            certificates;</li>
+        <li>the security keys or security certificates of those systems are received, recorded, retrieved,
+            and validated using secure procedures and protocols: they are received over an
+            integrity-protected channel and validated before a connection is established, and the stored
+            credentials are protected against unauthorised access.</li>
+      </ul>
+      <span class="iref">Art. 12(4)<span class="dref">Draft DA: R-G1-04, R-G1-05</span></span>
+    </label>
+  </div>
+</div></div>
+
+<h3><span class="gid">IAM</span>User management: identification, authentication, and authorisation</h3>
+<div class="checklist"><div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="iam-1"><label for="iam-1">
+      <b><span class="id">IAM-01</span>Electronic identification at assurance level "substantial" for onboarded users</b>
+      Onboarded users are identified and authenticated by electronic identification means issued under an
+      electronic identification scheme that meets at least the eIDAS assurance level "substantial"
+      (Art. 8(2)(b) of Regulation (EU) No 910/2014).
+      <span class="iref">Art. 4(2)(a)(i), (3)<span class="dref">Draft DA: R-G3-01</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="iam-2"><label for="iam-2">
+      <b><span class="id">IAM-02</span>Authorisation registry</b>
+      The platform maintains an authorisation registry:
+      <ul>
+        <li>as a separate ICT component — internal to the platform or part of an external ICT system
+            connected via secure communications;</li>
+        <li>holding a uniquely identified user profile for each onboarded user with at least: coded
+            user identification, processing rights with their period of validity and the data
+            elements they cover, an indication of primary/temporary authoriser status, for primary
+            authorisers the user profiles they are allowed to modify, for temporary authorisers the
+            temporary processing rights they are entitled to issue, and the notification indicator;</li>
+        <li>keeping the processing rights of onboarded users up to date and available for auditing
+            purposes;</li>
+        <li>recording the temporary access credentials of non-onboarded users in a dedicated
+            registry.</li>
+      </ul>
+      <span class="iref">Art. 5(1), (2), (3), (5)(a); Art. 4(2)(b)<span class="dref">Draft DA: R-G3-06</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="iam-3"><label for="iam-3">
+      <b><span class="id">IAM-03</span>Onboarding and authoriser roles</b>
+      <ul>
+        <li>Primary authorisers are established only after identification/authentication and after
+            verification and recording of credentials establishing that the user is the data holder,
+            its legal representative, or empowered to act on the data holder's behalf.</li>
+        <li>Designated primary authorisers can set up, modify, and delete onboarded user profiles,
+            including their processing rights; the platform limits them to the user profiles recorded for
+            them in the registry (Art. 1(24); Art. 5(3)(d)). Each of these operations, including blocked
+            attempts, is recorded.</li>
+        <li>Designated temporary authorisers can issue and revoke temporary access credentials; the platform limits them to the temporary processing rights
+            they are entitled to issue (Art. 5(3)(e)). Each credential records at least the contact
+            details of the non-onboarded user, the data set ID(s), the granted processing rights, and
+            their period of validity.</li>
+      </ul>
+      <span class="iref">Art. 1(24), (25); Art. 5(1)(b), (3)(d), (e), (4), (5)(a), (6)<span class="dref">Draft DA: R-G3-07, R-G3-08</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="iam-4"><label for="iam-4">
+      <b><span class="id">IAM-04</span>Non-onboarded users</b>
+      Access for non-onboarded users follows the prescribed flow:
+      <ul>
+        <li>a message, sent by the temporary authoriser, to the recorded contact address containing the
+            access link and the data set ID(s); the dispatch is recorded;</li>
+        <li>login only via two-factor authentication, with both factors verified before access;</li>
+        <li>restriction to the granted operations;</li>
+        <li>mandatory termination of the session upon the user's acknowledgement or upon expiry of
+            the validity period — after which no access is possible without a new identification and
+            authentication.</li>
+      </ul>
+      <span class="iref">Art. 5(5)(b)–(d)<span class="dref">Draft DA: R-G3-02, R-G3-04, R-G3-09</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="iam-5"><label for="iam-5">
+      <b><span class="id">IAM-05</span>IAA before any processing, for each session</b>
+      <ul>
+        <li>Identification, authentication, and authorisation are performed again in every login
+            session, for all users and access modalities, before any processing operation is
+            possible.</li>
+        <li>The authorisation registry is the principal mechanism: it is consulted before every
+            processing operation (for non-onboarded users, the dedicated registry incl. data set ID and
+            requested operation), including the period of validity of the rights.</li>
+        <li>No operation is executed without a successful validation.</li>
+      </ul>
+      <span class="iref">Art. 4(6); Art. 5(1); Art. 9(1); Reg. (EU) 2020/1056 Art. 9(1)(f), Art. 10(1)(a) (eFTI service providers)<span class="dref">Draft DA: R-G3-03, R-G3-10, R-G3-11</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="iam-6"><label for="iam-6">
+      <b><span class="id">IAM-06</span>Tributary ICT systems</b>
+      <ul>
+        <li>The eFTI platform itself maintains a registry of the tributary ICT systems connected to it,
+            which records, and keeps up to date, for each system the identification reference of the
+            responsible business user and the details of the system's security key; the creation and
+            update of registry entries are recorded, and the entries are retrievable through the
+            platform.</li>
+        <li>When the tributary ICT system was onboarded, it was verified that the system itself
+            identifies and authenticates its users at eIDAS level "substantial" and controls their
+            access via an authorisation registry.</li>
+        <li>Generation of the UIL and the upload of identifiers to the Gate's registry of identifiers
+            are performed by the eFTI platform itself.</li>
+      </ul>
+      <span class="iref">Art. 4(4), (5); Annex point (f)(4)<span class="dref">Draft DA: R-G3-05 (first item; the other items have no direct counterpart in the draft)</span></span>
+    </label>
+  </div>
+</div></div>
+
+<h3><span class="gid">DATA</span>Working with eFTI data sets</h3>
+<div class="checklist"><div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="data-1"><label for="data-1">
+      <b><span class="id">DATA-01</span>Consent message before processing operations</b>
+      Before allowing a business user to perform processing operations, the platform informs the user
+      through clearly worded messages that, by processing the data, the user consents to:
+      <ul>
+        <li>the data being made available automatically to competent authorities upon a request for
+            access to eFTI data for the specific data set of which that data is part;</li>
+        <li>an audit trail of the user's processing operations being recorded, which may be made
+            available to competent authorities for consultation (for auditing purposes, see LOG-04) in
+            accordance with applicable Union or national law.</li>
+      </ul>
+      Processing operations are only possible after the user has confirmed this message.
+      <span class="iref">Art. 9(4)<span class="dref">Draft DA: R-G7-01</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="data-2"><label for="data-2">
+      <b><span class="id">DATA-02</span>Functionality to create and generate data sets</b>
+      <ul>
+        <li>Authorised users can request the creation of a new eFTI data set; the platform requests
+            the information needed to determine the applicable eFTI data subsets.</li>
+        <li>The data set is generated from all data elements of the applicable subsets, and no other data
+            element, with elements common to several subsets included only once.</li>
+        <li>A data set ID (in UUID format, Art. 11(2)(c) of Impl. Reg. (EU) 2024/1942) is allocated
+            automatically and the status 'draft' is assigned.</li>
+        <li>Each data set belongs to exactly
+            one eFTI Gate for its whole lifetime: its identifiers are uploaded to this Gate only, and its
+            unique electronic identifying link (UIL) names this Gate.</li>
+      </ul>
+      <span class="iref">Art. 1(12); Art. 8; Art. 9(1)(a); Annex point (a); Impl. Reg. (EU) 2024/1942 Recital (9), Art. 11(2); TGD1 ch. 4.4 (guidance)<span class="dref">Draft DA: R-G4-01, R-G4-02, R-G4-12 (i)</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="data-3"><label for="data-3">
+      <b><span class="id">DATA-03</span>Functionality to edit with validation</b>
+      Authorised users can input and modify data within their processing rights, where:
+      <ul>
+        <li>before recording the data, the platform verifies whether values have been provided for
+            all data elements whose legal status is mandatory or conditional for the underlying
+            subsets, and whether the values correspond to the technical characteristics (e.g. data type,
+            format, code list) and business rules (Art. 8(3)); the user is informed of the result by
+            appropriate messages;</li>
+        <li>edited data is recorded following this validation and upon the user's confirmation that
+            they do not wish to process the data further;</li>
+        <li>free-text data elements can be entered in the official languages of the Union to the
+            extent provided for by the relevant legal acts (validation does not restrict the
+            language).</li>
+      </ul>
+      <span class="iref">Art. 8(3); Art. 9(1)(b); Annex point (b); Del. Reg. (EU) 2024/2024; Reg. (EU) 2020/1056 Art. 9(1)(k)<span class="dref">Draft DA: R-G4-03</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="data-4"><label for="data-4">
+      <b><span class="id">DATA-04</span>Functionality to read and download</b>
+      <ul>
+        <li>Authorised users have, by default, read-only access to all data elements for which they
+            hold processing rights.</li>
+        <li>Authorised users can download a complete copy of the data set (within their processing
+            rights) in both human-readable and machine-readable format.</li>
+      </ul>
+      <span class="iref">Art. 9(1)(c), (d); Annex points (c), (d)<span class="dref">Draft DA: R-G4-05, R-G4-06 (download function; certification mark and time stamp: HMI-02), R-G4-07</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="data-5"><label for="data-5">
+      <b><span class="id">DATA-05</span>Electronic signatures and seals</b>
+      <ul>
+        <li>The platform enables electronic signing by the consignor, carrier, and consignee and
+            records metadata that allows verifying whether the signing method complies
+            at least with the requirements for an advanced electronic signature (Art. 26) or
+            advanced electronic seal (Art. 36) under Regulation (EU) No 910/2014.</li>
+        <li>Signing or stamping is only enabled after the user has confirmed having read all data for
+            which they hold processing rights and not wishing to process the data further.</li>
+        <li>Upon each completed signature, the platform assigns the value '1' to the corresponding
+            data element: eFTI65 (consignor), eFTI115 (carrier), eFTI84 (consignee).</li>
+        <li>For combined transport, signing or stamping by the authority in a sea port, inland
+            waterway port, or railway station is supported; the platform records metadata that allows
+            verifying whether the means used comply at least with the requirements for an advanced
+            electronic signature or seal as above or, for stamping, a qualified electronic time stamp
+            (Art. 42, Reg. (EU) No 910/2014); on completion the platform assigns value '1' to eFTI608.</li>
+      </ul>
+      <span class="iref">Art. 9(1)(e)–(h); Annex points (e)–(h)<span class="dref">Draft DA: R-G4-08, R-G4-09</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="data-6"><label for="data-6">
+      <b><span class="id">DATA-06</span>Status management and archiving</b>
+      <ul>
+        <li>The platform manages the data set lifecycle (draft, active, inactive, ready to archive,
+            and archived): 'draft' upon allocation of the data set ID; 'active' upon the carrier
+            signature; upon the consignee signature, 'inactive' where the mode of transport (eFTI581) is
+            road ('3'), for the cumulated periods for cabotage checks under Art. 8(2)/(2a) of Regulation
+            (EC) No 1072/2009, and 'ready to archive' otherwise or once that period has expired.</li>
+        <li>Authorised users can archive a data set (Art. 9(1)(i)); in addition, the platform may archive
+            automatically, only from the status 'ready to archive' and only after the authorised users
+            have been informed by a notification identifying the data set.</li>
+        <li>Every archival event is recorded in the operations log: for user-initiated archiving as
+            a logged processing operation (Art. 9(5)); for automatic archiving including the data set ID,
+            the time of the event, and the prior notification of the users.</li>
+      </ul>
+      <span class="iref">Annex points (a)(2), (f)(5), (g)(5), (6), (i); Art. 9(1)(i), (5), (6), (7); Reg. (EU) 2020/1056 Art. 9(1)(g)<span class="dref">Draft DA: R-G4-12, R-G4-13, R-G4-14, R-G4-15</span></span>
+    </label>
+  </div>
+</div></div>
+
+<h3><span class="gid">LOG</span>Audit trail and logging</h3>
+<div class="checklist"><div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="log-1"><label for="log-1">
+      <b><span class="id">LOG-01</span>Audit trail of the Gate exchange</b>
+      <ul>
+        <li>Every identifier upload or update and the Gate's response to it are recorded, and an error
+            status is made visible to the platform operator.</li>
+        <li>Every incoming data request from an eFTI Gate (including requests answered with an error) is recorded
+            with at least the request identification number, the data set ID, and the date and time of
+            the request.</li>
+        <li>Every response is recorded with the response identification number, the identification
+            number of the corresponding request, the type of response (data set or error message),
+            the date and time, and — where a data set was returned — the data elements and their
+            respective values as included in the response.</li>
+        <li>The recorded entries remain retrievable on the platform for the retention periods of STOR-02.</li>
+      </ul>
+      <span class="iref">Art. 3(2)(c), (e); Annex points (b)(4), (f)(4)<span class="dref">Draft DA: R-G2-08, R-G2-09, R-G4-04 (iii), R-G4-11 (iii), (iv)</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="log-2"><label for="log-2">
+      <b><span class="id">LOG-02</span>Audit trail of follow-up communications</b>
+      <ul>
+        <li>Every incoming follow-up communication (including follow-ups answered with an error) is
+            recorded with the request identification number and the date and time of receipt.</li>
+        <li>Its content is recorded completely and faithfully as transmitted by the competent
+            authority (including all populated fields and any attached files), linked to the original request.</li>
+        <li>The recorded entries and contents remain retrievable on the platform for the retention
+            periods of STOR-02.</li>
+      </ul>
+      <span class="iref">Art. 3(2)(f)(ii), (g)<span class="dref">Draft DA: R-G2-06a, R-G2-06b, R-G2-10</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="log-3"><label for="log-3">
+      <b><span class="id">LOG-03</span>Logging of all business user operations</b>
+      <ul>
+        <li>Every processing operation is logged per data element with: data set ID, user
+            identification (for operations originating from a tributary ICT system, the identification
+            of the onboarded business user under whose legal responsibility that system operates, see IAM-06;
+            for non-onboarded users, the identification information provided in the two-factor
+            authentication), date and time, and type of operation.</li>
+        <li>Where an operation modifies or deletes the value of a data element, the value it had
+            before the operation is additionally recorded in the log; together with the sequencing
+            requirement below, this preserves the original value and the full history of each element
+            (the current value is held in the data set itself).</li>
+        <li>The logs allow the sequence of all operations on each data element to be
+            reconstructed.</li>
+      </ul>
+      <span class="iref">Art. 9(5); Reg. (EU) 2020/1056 Art. 9(1)(g)<span class="dref">Draft DA: R-G4-16; the logging points of R-G4-01 (iv), R-G4-02 (vii), R-G4-03 (ix), R-G4-05 (iii), R-G4-06 (v), R-G4-07 (iii), R-G4-08 (vi), R-G4-09 (vi), R-G4-13 (iii), R-S2-03 (iv), R-S2-04 (iii), R-S3-01 (v), R-S3-02 (v), R-S3-03 (iv)</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="log-4"><label for="log-4">
+      <b><span class="id">LOG-04</span>Provision of the operations log</b>
+      The operations log, i.e. the log of business user operations (LOG-03) and the audit trails of the
+      Gate exchange and of follow-up communications (LOG-01, LOG-02), is maintained accessible to
+      competent authorities and can be provided to them on request in a human-readable form; the platform can extract and filter the operations for a single
+      consignment or a group of consignments by search key (e.g. UIL, event time) (TGD2 ch. 11.2.5,
+      guidance). The regulation does not provide for an online retrieval endpoint for this; provision is
+      made through offline channels, e.g. as an export.
+      <span class="iref">Art. 9(7); Reg. (EU) 2020/1056 Art. 9(1)(i); TGD2 ch. 11.2.5 (guidance)<span class="dref">Draft DA: R-G6-02 (iii)</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="log-5"><label for="log-5">
+      <b><span class="id">LOG-05</span>Log integrity</b>
+      The operations log and the audit trails (LOG-01 to LOG-03; not necessarily the technical system logs of the
+      platform) are stored with at least the same level of security as the eFTI data
+      itself and are protected against manipulation: recorded entries
+      cannot be altered or deleted without detection (e.g. WORM storage, hash chaining, or signed
+      log records), and only authorised personnel can access them.
+      <span class="iref">Reg. (EU) 2020/1056 Art. 9(1)(g), (j), Art. 10(1)(d) (eFTI service providers); TGD2 ch. 11.2.3, 11.2.4 (guidance)<span class="dref">Draft DA: R-G2-08 (iv), R-G2-09 (v), R-G2-10 (iv)</span></span>
+    </label>
+  </div>
+</div></div>
+
+<h3><span class="gid">STOR</span>Storage, availability, retention, and deletion</h3>
+<div class="checklist"><div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="stor-1"><label for="stor-1">
+      <b><span class="id">STOR-01</span>Online availability</b>
+      <ul>
+        <li>Data sets are continuously kept available online for business users and competent
+            authorities (the latter via authorised requests for access to eFTI data over an eFTI Gate;
+            <i>eFTI service providers only:</i> with immediate access free of any charges or fees)
+            while they have the status 'active' and, where applicable, 'inactive'.</li>
+        <li>Operations are designed to ensure this availability; the specific measures
+            (e.g. redundancy, monitoring, incident processes) are the implementer's choice.</li>
+      </ul>
+      <span class="iref">Art. 9(6); Art. 11; Reg. (EU) 2020/1056 Art. 10(1)(c)<span class="dref">Draft DA: R-G6-01</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="stor-2"><label for="stor-2">
+      <b><span class="id">STOR-02</span>Retention of archived data and logs</b>
+      <ul>
+        <li>Data sets with the status 'ready to archive' or 'archived' and the corresponding operations
+            logs, linked to their data set — including the audit trails
+            of the Gate exchange and of follow-up communications (LOG-01, LOG-02) — remain
+            accessible to competent authorities for the periods resulting from the applicable Union
+            legal acts and national law.</li>
+        <li>The operations log as a whole (LOG-01 to LOG-03) additionally remains accessible for
+            monitoring purposes for the five-yearly reporting periods under Art. 17 of Regulation (EU)
+            2020/1056.</li>
+        <li>Authorisation registry records are retained at least as long as the data sets to which
+            they relate.</li>
+      </ul>
+      <span class="iref">Art. 9(7); Art. 5(6); Reg. (EU) 2020/1056 Art. 9(1)(h), (i), Art. 10(1)(b) (eFTI service providers), Art. 17<span class="dref">Draft DA: R-G6-02, R-G3-08 (v), R-G3-10 (iv)</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="stor-3"><label for="stor-3">
+      <b><span class="id">STOR-03</span>Deletion of personal data (GDPR)</b>
+      <ul>
+        <li>Personal data is deleted within a reasonable time after expiry of the respective
+            retention periods — including from the authorisation registry and from backups.</li>
+        <li>Each deletion is recorded with its date and time, without retaining the deleted personal
+            data.</li>
+        <li>Processing of personal data as a whole complies with Regulation (EU) 2016/679 (legal
+            bases, data subject rights, processor arrangements, and deletion concept).</li>
+      </ul>
+      <span class="iref">Art. 9(8); Art. 5(7); Reg. (EU) 2020/1056 Art. 9(1)(a)<span class="dref">Draft DA: R-G6-03</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="stor-4"><label for="stor-4">
+      <b><span class="id">STOR-04</span>Storage location within the European Union</b>
+      All eFTI data (including logs, registries, and backups) is stored within the European Union or under
+      Union or Member State jurisdiction.
+      <span class="iref">Art. 13(c)</span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="stor-5"><label for="stor-5">
+      <b><span class="id">STOR-05</span>Backup and recovery</b>
+      <ul>
+        <li>Where the data is stored on storage devices managed by the platform operator, regular backups
+            with tested recovery procedures are in place.</li>
+        <li>Where cloud services are used, the provider complies with the main international
+            standards and best practices for cloud security and the protection of personal data.</li>
+        <li>The operations log (LOG-01 to LOG-03) is covered by the same backup and recovery measures
+            as the data and can be recovered from a backup in case of data loss or corruption.</li>
+      </ul>
+      <span class="iref">Art. 13(a)(i), (iii), (b); Reg. (EU) 2020/1056 Art. 9(1)(g), (i); TGD2 ch. 11.2.3 (guidance)</span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="stor-6"><label for="stor-6">
+      <b><span class="id">STOR-06</span>Data protection and information security</b>
+      <ul>
+        <li>The data is protected against corruption and theft as well as against unauthorised or
+            unlawful processing and against accidental loss, destruction, or damage (access controls,
+            encryption in transit and at rest, hardening, and log monitoring).</li>
+        <li>The confidentiality of commercial information is ensured; such information can be
+            accessed and processed only when authorised.</li>
+        <li><i>eFTI service providers only</i> (platforms storing data of several customers): the data
+            of different economic operators is kept strictly separate (multi-tenant architecture with
+            tenant isolation at storage and access level), so that no business user of one economic
+            operator can access data of another, unless explicitly authorised in accordance with
+            IAM-01 to IAM-04.</li>
+        <li>Regular security vulnerability assessments are performed and followed up.</li>
+        <li>An information security management process is in place (e.g. aligned with ISO/IEC 27001;
+            where applicable, the obligations of the NIS 2 Directive are met).</li>
+      </ul>
+      <span class="iref">Art. 13(a)(iv); Reg. (EU) 2020/1056 Art. 6, Art. 9(1)(b), (j), Art. 10(1)(d) (eFTI service providers)</span>
+    </label>
+  </div>
+</div></div>
+
+<h3><span class="gid">NTF</span>Notifications and reports</h3>
+<div class="checklist"><div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="ntf-1"><label for="ntf-1">
+      <b><span class="id">NTF-01</span>Configuration of notification preferences</b>
+      Business users can configure the notifications and periodical reports they wish to receive,
+      covering:
+      <ul>
+        <li>for users flagged as eligible in the authorisation registry: data access requests by
+            competent authorities and follow-up communications;</li>
+        <li>for users who constitute a data holder or hold processing rights for the data concerned:
+            the processing operations of business users.</li>
+      </ul>
+      <span class="iref">Art. 7(1); Art. 5(3)(f)<span class="dref">Draft DA: R-G7-02</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="ntf-2"><label for="ntf-2">
+      <b><span class="id">NTF-02</span>Delivery and content of notifications</b>
+      <ul>
+        <li>Notifications, including in the form of periodical reports where a user has configured this,
+            are delivered according to the configured preferences (channel is the implementer's choice,
+            e.g. in-application, email).</li>
+        <li>Independently of the configured preferences, the business users concerned are notified of
+            each incoming follow-up communication, i.e. the users acting for an economic operator or
+            other data holder whose authorisation includes the corresponding processing rights for the
+            data set to which the follow-up communication relates.</li>
+        <li>Notifications and reports on data access requests and follow-up communications contain at
+            least: date and time of receipt of the request (and of the follow-up communication, where
+            lodged), the Member State of the requesting competent authority, the data set ID, and, where
+            lodged, the content of the follow-up communication.</li>
+        <li>Notifications on data access requests and follow-up communications are sent only where the
+            recipient's authorisation includes the corresponding processing rights for the data set
+            concerned.</li>
+      </ul>
+      <span class="iref">Art. 7(1), (2); Art. 3(2)(f)(iii)<span class="dref">Draft DA: R-G7-03</span></span>
+    </label>
+  </div>
+</div></div>
+
+<h3><span class="gid">HMI</span>User interface features for checks</h3>
+<div class="checklist"><div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="hmi-1"><label for="hmi-1">
+      <b><span class="id">HMI-01</span>UIL download and communication</b>
+      Authorised users can:
+      <ul>
+        <li>download the unique electronic identifying link (UIL) of a data set;</li>
+        <li>communicate it in machine-readable format to a competent authority officer during a check
+            (e.g. as a QR code displayed on screen or printed on paper).</li>
+      </ul>
+      <span class="iref">Art. 10(1)(b)<span class="dref">Draft DA: R-G5-02, R-G5-03</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="hmi-2"><label for="hmi-2">
+      <b><span class="id">HMI-02</span>Human-readable copy with time stamp</b>
+      <ul>
+        <li>Authorised users can download a human-readable copy of the data set and display it for
+            inspection by competent authority officers, when required by those officers (Reg. (EU)
+            2020/1056 Art. 4(2)).</li>
+        <li>The copy carries a time stamp of the download.</li>
+        <li>Note: the machine-readable coded reference of the certification mark, which the copy is also meant to
+            carry, is not defined by the message specifications yet.</li>
+      </ul>
+      <span class="iref">Art. 10(1)(c), (2)<span class="dref">Draft DA: R-G5-04, R-G4-06 (iii), (iv)</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="hmi-3"><label for="hmi-3">
+      <b><span class="id">HMI-03</span>Access protection on end devices</b>
+      The user interface includes access protection features for situations where the device used to
+      access the platform is not under the control of the user (e.g. session lock, re-authentication).
+      <span class="iref">Art. 10(3)<span class="dref">Draft DA: R-G5-01</span></span>
+    </label>
+  </div>
+</div></div>
+
+<h3><span class="gid">W</span>Waste shipments / DIWASS</h3>
+<p class="ref">Either W-00 or all of W-01 to W-03 apply.</p>
+<div class="checklist">
+<div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="w-0"><label for="w-0">
+      <b><span class="id">W-00</span>No waste shipments</b>
+      The platform does not support the processing of data on waste shipments within the meaning of
+      Regulation (EU) 2024/1157; the waste-specific functionalities under Art. 6 are not implemented
+      and are not offered to users.
+      <span class="iref">Art. 6(1), (2); Art. 9(2)</span>
+    </label>
+  </div>
+</div>
+<div class="or-divider">OR</div>
+<div class="check-group">
+  <div class="check-item">
+    <input type="checkbox" id="w-1"><label for="w-1">
+      <b><span class="id">W-01</span>DIWASS connection and security</b>
+      <ul>
+        <li>The platform has a secure API connection to the Digital Waste Shipment System (DIWASS) in
+            accordance with Impl. Reg. (EU) 2025/1290, either directly or, where made available by a
+            Member State, via the local system operated by a competent authority of that Member State
+            (Art. 6(1); Art. 27(4) of Regulation (EU) 2024/1157).</li>
+        <li>The security key of DIWASS is received, recorded, retrieved, and validated using secure
+            procedures: it is received over an integrity-protected channel and validated before use, and
+            the stored key is protected against unauthorised access.</li>
+        <li>The platform maintains an application programming interface through which it can receive
+            from DIWASS the data related to the consignee signature, where the consignee is a waste
+            treatment facility (see W-03).</li>
+        <li>The electronic identification means of waste-related users include the identification
+            number of the waste shipments operator.</li>
+      </ul>
+      <span class="iref">Art. 6; Art. 12(5); Art. 4(3) second subparagraph<span class="dref">Draft DA: R-S1-01, R-S1-02, R-S1-03a (the waste shipments operator identification number has no counterpart in the draft)</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="w-2"><label for="w-2">
+      <b><span class="id">W-02</span>Waste shipment documents</b>
+      Waste shipment documents can be retrieved from DIWASS based on the document number(s), read,
+      and downloaded and displayed in non-editable human-readable format, legible without technical
+      tools. If DIWASS returns no document for a number or its response cannot be processed, the user is
+      informed. Displays of waste shipment documents are logged as processing operations (LOG-03).
+      <span class="iref">Art. 9(2)(a); Art. 10(1)(c); Annex point (j)<span class="dref">Draft DA: R-S2-01 to R-S2-04</span></span>
+    </label>
+  </div>
+  <div class="check-item">
+    <input type="checkbox" id="w-3"><label for="w-3">
+      <b><span class="id">W-03</span>Waste-specific processing operations</b>
+      <ul>
+        <li>Business users can submit and edit waste shipment carrier transfer confirmations
+            (electronic signature with metadata recording and eFTI115 = '1'; upload of the
+            confirmation data to DIWASS).</li>
+        <li>The platform records the information referred to in Art. 14(2) of Impl. Reg. (EU) 2025/1290
+            (Annex point (k)(4)), and the receipt confirmation returned by DIWASS is processed and recorded
+            with the data set.</li>
+        <li>Signing is only enabled after the user has confirmed having read all data for which they hold
+            processing rights, not wishing to process the data further, and having read the copy of the
+            waste shipment documents and wishing to proceed with authenticating them.</li>
+        <li>Where the consignee is a waste treatment facility, the platform can record the consignee
+            signature data received from DIWASS (via the interface of W-01) as an alternative to capturing
+            the signature itself; in that case it also records
+            the associated metadata and assigns the value '1' to eFTI84.</li>
+      </ul>
+      <span class="iref">Art. 9(2)(b), (c); Art. 12(5)(c); Annex points (g)(3), (k); Impl. Reg. (EU) 2025/1290 Annex II Part B points 3, 4 and Part C points 3, 4<span class="dref">Draft DA: R-S1-03b, R-S3-01 to R-S3-04</span></span>
+    </label>
+  </div>
+</div>
+</div>
+
+<footer>
+Informative checklist of platform-internal eFTI requirements · Legal basis: Reg. (EU) 2020/1056, Impl. Reg. (EU) 2025/2243,
+Impl. Reg. (EU) 2024/1942, Del. Reg. (EU) 2024/2024, Reg. (EU) No 910/2014 (eIDAS), Reg. (EU) 2016/679 (GDPR),
+Reg. (EU) 2024/1157 and Impl. Reg. (EU) 2025/1290 (waste shipments) ·
+"Draft DA: R-…" references map items to Annex I of the draft delegated act on the certification of eFTI platforms (draft of 21 October 2026) ·
+This checklist is informative and does not replace the legal texts.
+</footer>
+
+</div>
+</body>
+</html>

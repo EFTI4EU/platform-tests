@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fault injection: the request ID, which the response must echo, is missing -->
+<uilQuery xmlns="http://efti.eu/v1/edelivery">
+  <uil>
+    <gateId>{{gateId}}</gateId>
+    <platformId>{{platformId}}</platformId>
+    <datasetId>{{datasetId}}</datasetId>
+  </uil>
+  {{#subsetIds}}<subsetId>{{.}}</subsetId>{{/subsetIds}}
+</uilQuery>

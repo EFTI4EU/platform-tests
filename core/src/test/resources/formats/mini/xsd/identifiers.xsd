@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Identifier structure: a subset of the data set structure in its own namespace, without annotations -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:i="urn:tst:mini:identifiers"
+            targetNamespace="urn:tst:mini:identifiers" elementFormDefault="qualified">
+  <xsd:element name="shipment" type="i:Shipment"/>
+  <xsd:complexType name="Shipment">
+    <xsd:sequence>
+      <xsd:element name="acceptedAt" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="vehicle" type="i:Vehicle" minOccurs="0"/>
+      <xsd:element name="equipment" type="i:Equipment" minOccurs="0" maxOccurs="unbounded"/>
+      <xsd:element name="delivery" type="i:Event" minOccurs="0"/>
+      <xsd:element name="mode" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="dangerous" type="xsd:boolean" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Vehicle">
+    <xsd:sequence>
+      <xsd:element name="plate" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="country" type="xsd:token" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Equipment">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="country" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="category" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="seq" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="carried" type="i:Carried" minOccurs="0" maxOccurs="unbounded"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Carried">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:token" minOccurs="0"/>
+      <xsd:element name="seq" type="xsd:token" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Event">
+    <xsd:sequence>
+      <xsd:element name="at" type="xsd:token" minOccurs="0"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

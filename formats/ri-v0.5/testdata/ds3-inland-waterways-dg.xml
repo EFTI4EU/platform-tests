@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DS3-DG: DS3 with dangerous goods on board (UN 1263 paint in steel drums, ADN).
+  Subsets EU01, EU05c. Mode of transport: inland waterway (8). All data are fictitious.
+-->
+<consignment xmlns="http://efti.eu/v1/consignment/common">
+  <carrierAcceptanceDateTime formatId="205">202609150800+0200</carrierAcceptanceDateTime>
+  <carrierAcceptanceLocation>
+    <postalAddress>
+      <additionalStreetName>Kai 12</additionalStreetName>
+      <buildingNumber>1</buildingNumber>
+      <cityName>Duisburg</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Nordrhein-Westfalen</countrySubDivisionName>
+      <postcode>47119</postcode>
+      <streetName>TST Synthetic Hafenkai Ruhrort-Süd</streetName>
+    </postalAddress>
+  </carrierAcceptanceLocation>
+  <consignee>
+    <name>TST Synthetic Consignee Haven BV</name>
+    <postalAddress>
+      <buildingNumber>30</buildingNumber>
+      <cityName>Rotterdam</cityName>
+      <countryCode>NL</countryCode>
+      <postcode>3011 AB</postcode>
+      <streetName>Synthetische Havenstraat</streetName>
+    </postalAddress>
+  </consignee>
+  <consigneeReceiptLocation>
+    <postalAddress>
+      <additionalStreetName>Kade 7</additionalStreetName>
+      <buildingNumber>30</buildingNumber>
+      <cityName>Rotterdam</cityName>
+      <countryCode>NL</countryCode>
+      <countrySubDivisionName>Zuid-Holland</countrySubDivisionName>
+      <postcode>3011 AB</postcode>
+      <streetName>Synthetische Havenstraat</streetName>
+    </postalAddress>
+  </consigneeReceiptLocation>
+  <consignor>
+    <name>TST Synthetic Consignor &amp; Kähne OHG</name>
+    <postalAddress>
+      <additionalStreetName>Kai 12</additionalStreetName>
+      <buildingNumber>1</buildingNumber>
+      <cityName>Duisburg</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Nordrhein-Westfalen</countrySubDivisionName>
+      <departmentName>TST Synthetic Port Shipping Dept. 1</departmentName>
+      <postOfficeBox>PF 3001</postOfficeBox>
+      <postcode>47119</postcode>
+      <streetName>TST Synthetic Hafenkai Ruhrort-Süd</streetName>
+    </postalAddress>
+  </consignor>
+  <grossWeight unitId="KGM">850000</grossWeight>
+  <includedConsignmentItem>
+    <transportDangerousGoods>
+      <dangerousGoodsLogisticsPackage>
+        <itemQuantity>12</itemQuantity>
+        <shippingMarks>
+          <markingText>3</markingText>
+        </shippingMarks>
+        <typeText>Steel drum</typeText>
+      </dangerousGoodsLogisticsPackage>
+      <grossWeight unitId="KGM">420</grossWeight>
+      <packagingDangerLevelCode>II</packagingDangerLevelCode>
+      <properShippingName>PAINT</properShippingName>
+      <technicalName>PAINT</technicalName>
+      <uNDGID>1263</uNDGID>
+    </transportDangerousGoods>
+  </includedConsignmentItem>
+  <mainCarriageTransportMovement>
+    <dangerousGoodsIndicator>true</dangerousGoodsIndicator>
+    <modeCode>8</modeCode>
+    <usedTransportMeans>
+      <id>04807132</id>
+      <registrationCountry>
+        <code>DE</code>
+      </registrationCountry>
+    </usedTransportMeans>
+  </mainCarriageTransportMovement>
+</consignment>

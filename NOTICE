@@ -1,0 +1,40 @@
+eFTI Platform Connection Resources & Tests
+
+This repository is licensed under the Apache License, Version 2.0 (see LICENSE), except for the third-party files
+listed below, which keep their own license.
+
+Third-party files in this repository
+------------------------------------
+
+formats/ri-v0.5/xsd/
+  Unchanged copies of the XML schemas of the eFTI4EU reference implementation
+  (https://github.com/EFTI4EU/reference-implementation), licensed under the Apache License, Version 2.0.
+
+formats/ri-v0.5/xsd/codes/
+  The UNECE_* and ISO_* code lists are published by UN/CEFACT and were taken from the eFTI4EU reference
+  implementation. Each file carries its own copyright notice and terms of use, which must be kept.
+
+deploy/db/ddl/
+  The *.ddl files are unchanged copies of the database scripts of Domibus 5.2.1, the eDelivery Access Point of the
+  European Commission, licensed under the European Union Public Licence (EUPL) version 1.2. They are not covered by
+  the Apache License of this repository. A copy of the EUPL is in deploy/db/ddl/EUPL-1.2.txt; the source code of
+  Domibus is available at https://ec.europa.eu/digital-building-blocks/code/projects/EDELIVERY/repos/domibus.
+
+mvnw, mvnw.cmd, .mvn/wrapper/
+  Apache Maven Wrapper, licensed under the Apache License, Version 2.0.
+
+Third-party libraries in the built artifacts
+--------------------------------------------
+
+The repository contains no third-party libraries. The build downloads them, and the jars and Docker images it
+produces bundle them under their own licenses. The libraries this project depends on directly are listed here; each
+brings its own dependencies, whose licenses apply as well:
+
+  Saxon-HE (Saxonica)             Mozilla Public License 2.0, source code: https://github.com/Saxonica/Saxon-HE
+  SchXslt2 (David Maus)           MIT License
+  Jackson (FasterXML)             Apache License 2.0
+  Spring Boot, Spring Framework   Apache License 2.0 (pseudo-platform only)
+  Thymeleaf                       Apache License 2.0 (pseudo-platform only)
+
+The Docker stack in deploy/ additionally pulls the official images of Domibus (EUPL 1.2) and MySQL (GPL 2.0). They
+run as separate services and are not part of this repository.

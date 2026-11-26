@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Test data set of the synthetic format for the subsets S1 and S2, before delivery -->
+<shipment xmlns="urn:tst:mini:dataset">
+  <acceptedAt>202609150800</acceptedAt>
+  <sender>
+    <name>Sender Ltd</name>
+    <department>Shipping</department>
+    <address>
+      <street>Main Street 1</street>
+      <city>Leipzig</city>
+    </address>
+  </sender>
+  <receiver>
+    <name>Receiver GmbH</name>
+    <address>
+      <street>Side Street 2</street>
+      <city>Berlin</city>
+    </address>
+  </receiver>
+  <vehicle>
+    <plate>AB123</plate>
+    <country>DE</country>
+  </vehicle>
+  <weight unit="KGM">12500</weight>
+  <item>
+    <count>3</count>
+    <kind>PX</kind>
+  </item>
+  <equipment>
+    <id>EQ1</id>
+    <country>PL</country>
+    <category>TE</category>
+    <seq>1</seq>
+  </equipment>
+  <hazard>none</hazard>
+  <mode>3</mode>
+  <dangerous>false</dangerous>
+</shipment>

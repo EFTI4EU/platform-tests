@@ -1,0 +1,98 @@
+name: tst
+
+# Published ports listen on localhost only, because all credentials are test credentials. TST_BIND=0.0.0.0 makes
+# the Domibus port reachable from other machines (needed for an access point on another machine), including its admin
+# console and WS plugin. The pseudo-platform UI always stays local. TST_GATE_PORT and TST_PLATFORM_PORT change the host
+# ports; tst.sh reads the ports from the running containers.
+# The memory limits (together 3.5 GB) keep the stack from starving other services on a shared machine.
+services:
+  mysql:
+    # The MySQL version of the official Domibus database image (domibus-mysql8) of the Domibus version below
+    image: mysql:8.4.13
+    mem_limit: 768m
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./db:/docker-entrypoint-initdb.d:ro
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      # The init scripts run against a temporary server without networking, so a TCP ping only
+      # succeeds once all Domibus schemas exist.
+      test: mysqladmin ping -h 127.0.0.1 -uroot -proot --silent
+      interval: 5s
+      timeout: 5s
+      retries: 60
+
+  # One Domibus instance, multi-tenant: domain "tstgate" (the access point of the test runner) and domain "pseudoplatform".
+  domibus:
+    build: ./domibus
+    image: tst-domibus:5.2.1.4
+    mem_limit: 1600m
+    ports:
+      - "${TST_BIND:-127.0.0.1}:${TST_GATE_PORT:-18080}:8080"
+    volumes:
+      - ./domibus/conf/domibus.properties:/opt/domibus/conf/domibus/domibus.properties:ro
+      - ./domibus/conf/domains:/opt/domibus/conf-seed/domains:ro
+    # Domibus writes truststore changes (onboarded platforms) back to the store files, so it works on a
+    # copy made when the container is created; the generated stores stay unchanged.
+    command: ["sh", "-c", "cp -r --update=none /opt/domibus/conf-seed/domains/. /opt/domibus/conf/domibus/domains/ && exec catalina.sh run"]
+    # Lets onboarded platforms use http://host.docker.internal:<port>/... for an access point running on
+    # the host (Docker Desktop and OrbStack provide this name anyway, Docker on Linux needs the mapping).
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # Uploads the PModes and the certificates of onboarded platforms (platforms/) once Domibus is up.
+  # Services that need a ready Domibus should depend on this one with
+  # condition: service_completed_successfully.
+  domibus-setup:
+    image: curlimages/curl:8.16.0
+    entrypoint: ["sh", "/setup/setup.sh"]
+    volumes:
+      - ./setup:/setup:ro
+      - ./platforms:/platforms:ro
+    depends_on:
+      - domibus
+
+  # Pseudo platform (domain "pseudoplatform") with its web UI
+  pseudo-platform:
+    build:
+      context: ..
+      dockerfile: pseudo-platform/Dockerfile
+    image: tst-pseudo-platform
+    mem_limit: 512m
+    ports:
+      - "127.0.0.1:${TST_PLATFORM_PORT:-18090}:18090"
+    environment:
+      PLATFORM_WS_PLUGIN_URL: http://domibus:8080/domibus/services/wsplugin
+    healthcheck:
+      # The container runs a few seconds before the web UI answers
+      test: curl -fsS -o /dev/null http://127.0.0.1:18090/
+      interval: 2s
+      timeout: 5s
+      retries: 30
+    depends_on:
+      domibus-setup:
+        condition: service_completed_successfully
+
+  # Test runner acting as the eFTI gate (domain "tstgate"). Interactive, so not started by "up":
+  # docker compose run --rm runner --config /platforms/<partyId>/tst.yml  (or: sh tst.sh run <partyId>)
+  runner:
+    profiles: [runner]
+    build:
+      context: ..
+      dockerfile: runner/Dockerfile
+    image: tst-runner
+    mem_limit: 640m
+    volumes:
+      - ./platforms:/platforms:ro
+      - ./reports:/reports
+    command: ["--config", "/platforms/pseudoplatform/tst.yml"]
+    depends_on:
+      domibus-setup:
+        condition: service_completed_successfully
+
+volumes:
+  mysql-data:

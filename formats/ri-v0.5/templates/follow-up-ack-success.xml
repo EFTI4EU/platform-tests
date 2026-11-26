@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<postFollowUpResponse xmlns="http://efti.eu/v1/edelivery" requestId="{{requestId}}" status="200"/>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eFTI pseudo platform</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 1.5rem auto; max-width: 80rem; padding: 0 1rem; color: #222; }
+        section, article { margin-bottom: 1.5rem; }
+        article { border: 1px solid #ccc; border-radius: 4px; padding: 0.75rem 1rem; }
+        article > details { margin-top: 1rem; }
+        textarea { width: 100%; font-family: monospace; font-size: 0.85rem; box-sizing: border-box; }
+        table { border-collapse: collapse; width: 100%; font-size: 0.85rem; }
+        th, td { border-bottom: 1px solid #ddd; padding: 0.3rem 0.5rem; text-align: left; vertical-align: top; }
+        pre { white-space: pre-wrap; word-break: break-all; max-height: 30rem; overflow: auto; background: #f6f6f6; padding: 0.5rem; }
+        form.inline { display: inline; }
+        label { display: block; }
+        button { margin-top: 0.4rem; }
+        .id { font-family: monospace; font-size: 1.3rem; user-select: all; }
+        .status { font-size: 0.9rem; padding: 0.1rem 0.5rem; border-radius: 3px; background: #e3e9f3; margin-left: 0.5rem; }
+        .notice { background: #e6f4e6; padding: 0.5rem; }
+        .error { background: #fbe4e4; padding: 0.5rem; }
+        .muted { color: #777; }
+    </style>
+    <style th:utext="${messageTableCss}"></style>
+</head>
+<body>
+<h1>eFTI pseudo platform</h1>
+<p class="muted">
+    Party <code th:text="${properties.ownPartyId()}"></code>,
+    gate <code th:text="${properties.gatePartyId()}"></code>,
+    format <code th:text="${formatVersion}"></code> -
+    messages update automatically
+</p>
+<form method="post" th:action="@{/clear}"
+      onsubmit="return confirm('Delete all data sets and messages? The fault toggles are kept.')">
+    <button>Clear data sets and messages</button>
+</form>
+
+<div data-live="state">
+    <p class="error" th:if="${view.connectionError().isPresent()}"
+       th:text="'Domibus unavailable, still polling: ' + ${view.connectionError().get()}"></p>
+    <details class="error" th:unless="${view.problems().isEmpty()}">
+        <summary th:text="'Failures handling received messages: ' + ${view.problems().size()}"></summary>
+        <pre th:each="problem : ${view.problems()}" th:text="${problem}"></pre>
+    </details>
+</div>
+<pre class="error" th:if="${error}" th:text="${error}"></pre>
+<p class="notice" th:if="${notice}" th:text="${notice}"></p>
+
+<section>
+    <h2>Fault toggles</h2>
+    <form method="post" th:action="@{/faults}">
+        <label><input type="checkbox" name="ignoreDataRequests" value="true"
+                      th:checked="${view.toggles().ignoreDataRequests()}"> Never answer data requests</label>
+        <label><input type="checkbox" name="ignoreSubsetFilter" value="true"
+                      th:checked="${view.toggles().ignoreSubsetFilter()}"> Ignore the subset filter (return the full data set)</label>
+        <label><input type="checkbox" name="skipUploadOnUpdate" value="true"
+                      th:checked="${view.toggles().skipUploadOnUpdate()}"> Send no identifier upload when an active data set is updated
+            (the runner waits a minute for it, then fails T-RUN-03)</label>
+        <button>Save</button>
+    </form>
+</section>
+
+<section>
+    <h2>New data set</h2>
+    <form method="get" th:action="@{/}">
+        <select name="testData" th:if="${!testDataSets.isEmpty()}">
+            <option th:each="name : ${testDataSets}" th:value="${name}" th:text="${name}"
+                    th:selected="${name == selectedTestData}"></option>
+        </select>
+        <button>Load test data</button>
+    </form>
+    <form method="post" th:action="@{/datasets}">
+        <textarea name="xml" rows="14" th:text="${newXml}"></textarea>
+        <button>Create</button>
+    </form>
+</section>
+
+<section>
+    <h2>Data sets</h2>
+    <p th:if="${view.dataSets().isEmpty()}" class="muted">None yet.</p>
+    <article th:each="ds, dsStat : ${view.dataSets()}" th:with="ended=${ds.status().name() == 'INACTIVE' or ds.status().name() == 'READY_TO_ARCHIVE'}">
+        <h3><span class="id" th:text="${ds.id()}"></span><span class="status" th:text="${ds.status()}"></span></h3>
+        <form th:unless="${ended}" method="post" th:action="@{/datasets/{id}/update(id=${ds.id()})}">
+            <textarea name="xml" rows="14" th:text="${ds.id() == editedId ? editedXml : ds.xml()}"></textarea>
+            <button>Update</button>
+            <button th:formaction="@{/datasets/{id}/carrier-signature(id=${ds.id()})}"
+                    th:disabled="${ds.status().name() != 'DRAFT'}">Carrier signature</button>
+            <button th:formaction="@{/datasets/{id}/consignee-signature(id=${ds.id()})}"
+                    th:disabled="${ds.status().name() != 'ACTIVE'}">Consignee signature</button>
+        </form>
+        <details th:if="${ended}">
+            <summary>Data set</summary>
+            <textarea rows="14" readonly th:text="${ds.xml()}"></textarea>
+        </details>
+        <!--/* The newest data set keeps its messages open after the consignee signature: the runner may keep sending requests. */-->
+        <details th:open="${!ended or dsStat.first}">
+            <summary>Messages</summary>
+            <div th:attr="data-live='messages-' + ${ds.id()}">
+                <th:block th:utext="${view.messageTable(view.messagesOf(ds.id()))}"></th:block>
+            </div>
+        </details>
+    </article>
+</section>
+
+<section>
+    <h2>Other messages</h2>
+    <p class="muted">Messages that belong to none of the data sets above, e.g. requests for unknown data sets.</p>
+    <div data-live="other-messages">
+        <th:block th:utext="${view.messageTable(view.otherMessages())}"></th:block>
+    </div>
+</section>
+<script>
+    // Replaces the read-only parts (data-live) with those of a freshly rendered page instead of reloading it, so
+    // that text typed into the forms is kept. A part with an expanded payload is left alone until it is collapsed.
+    setInterval(async () => {
+        try {
+            const response = await fetch(location.pathname, {cache: 'no-store'});
+            if (!response.ok) {
+                return;
+            }
+            const page = new DOMParser().parseFromString(await response.text(), 'text/html');
+            document.querySelectorAll('[data-live]').forEach(part => {
+                const fresh = page.querySelector(`[data-live="${part.dataset.live}"]`);
+                if (fresh && !part.querySelector('details[open]')) {
+                    part.replaceWith(fresh);
+                }
+            });
+        } catch (e) {
+            // Keep the current state; the next round retries.
+        }
+    }, 3000);
+</script>
+</body>
+</html>

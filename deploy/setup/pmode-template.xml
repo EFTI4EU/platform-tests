@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- PMode shared by all domains; setup.sh replaces SELF_PARTY with the domain's own party ID and inserts the
+     platforms onboarded with tst.sh at the ONBOARDED_* markers (tstgate only). The party ID type, service and
+     action must match DomibusConfig.java (domibus-client); tst.sh reads them from here for connection-info.txt. -->
+<db:configuration xmlns:db="http://domibus.eu/configuration" party="SELF_PARTY">
+
+  <mpcs>
+    <mpc name="defaultMpc"
+         qualifiedName="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/defaultMPC"
+         enabled="true"
+         default="true"
+         retention_downloaded="0"
+         retention_undownloaded="14400"
+         retention_sent_success="14400"
+         retention_sent_failure="14400"
+         retention_metadata_offset="0"
+         delete_message_metadata="false"
+         max_batch_delete="1000"/>
+  </mpcs>
+  <businessProcesses>
+    <roles>
+      <role name="defaultInitiatorRole"
+            value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/initiator"/>
+      <role name="defaultResponderRole"
+            value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/responder"/>
+    </roles>
+    <parties>
+      <partyIdTypes>
+        <partyIdType name="partyTypeUrn" value="urn:oasis:names:tc:ebcore:partyid-type:unregistered"/>
+      </partyIdTypes>
+      <party name="tstgate" endpoint="http://domibus:8080/domibus/services/msh?domain=tstgate">
+        <identifier partyId="tstgate" partyIdType="partyTypeUrn"/>
+      </party>
+      <party name="pseudoplatform" endpoint="http://domibus:8080/domibus/services/msh?domain=pseudoplatform">
+        <identifier partyId="pseudoplatform" partyIdType="partyTypeUrn"/>
+      </party>
+      <!-- ONBOARDED_PARTIES -->
+    </parties>
+    <meps>
+      <mep name="oneway" value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/oneWay" legs="0"/>
+      <binding name="push" value="http://docs.oasis-open.org/ebxml-msg/ebms/v3.0/ns/core/200704/push"/>
+    </meps>
+    <properties>
+      <property name="originalSenderProperty" key="originalSender" datatype="string" required="true"/>
+      <property name="finalRecipientProperty" key="finalRecipient" datatype="string" required="true"/>
+      <propertySet name="eDeliveryPropertySet">
+        <propertyRef property="finalRecipientProperty"/>
+        <propertyRef property="originalSenderProperty"/>
+      </propertySet>
+    </properties>
+    <payloadProfiles>
+      <payload name="businessPayload" cid="cid:message" required="false" mimeType="text/xml"/>
+      <payloadProfile name="MessageProfile" maxSize="2147483647">
+        <attachment name="businessPayload"/>
+      </payloadProfile>
+    </payloadProfiles>
+    <securities>
+      <security name="eDeliveryAS4Policy" policy="eDeliveryAS4Policy.xml" signatureMethod="RSA_SHA256"/>
+    </securities>
+    <errorHandlings>
+      <errorHandling name="eftiErrorHandling"
+                     errorAsResponse="true"
+                     businessErrorNotifyProducer="true"
+                     businessErrorNotifyConsumer="true"
+                     deliveryFailureNotifyProducer="true"/>
+    </errorHandlings>
+    <!-- The PMode schema requires one agreement; no leg references it -->
+    <agreements>
+      <agreement name="agreement1" value="A1" type="T1"/>
+    </agreements>
+    <services>
+      <service name="eftiGateService" value="bdx:noprocess" type="tc1"/>
+    </services>
+    <actions>
+      <action name="eftiGateAction" value="eftiGateAction"/>
+    </actions>
+    <as4>
+      <receptionAwareness name="receptionAwareness" retry="1;4;CONSTANT" duplicateDetection="true"/>
+      <reliability name="AS4Reliability" nonRepudiation="true" replyPattern="response"/>
+    </as4>
+    <legConfigurations>
+      <legConfiguration name="eftiGateLeg"
+                        service="eftiGateService"
+                        action="eftiGateAction"
+                        defaultMpc="defaultMpc"
+                        reliability="AS4Reliability"
+                        security="eDeliveryAS4Policy"
+                        receptionAwareness="receptionAwareness"
+                        propertySet="eDeliveryPropertySet"
+                        payloadProfile="MessageProfile"
+                        errorHandling="eftiErrorHandling"
+                        compressPayloads="true"/>
+    </legConfigurations>
+    <process name="eftiProcess"
+             initiatorRole="defaultInitiatorRole"
+             responderRole="defaultResponderRole"
+             mep="oneway"
+             binding="push">
+      <initiatorParties>
+        <initiatorParty name="tstgate"/>
+        <initiatorParty name="pseudoplatform"/>
+        <!-- ONBOARDED_INITIATORS -->
+      </initiatorParties>
+      <responderParties>
+        <responderParty name="tstgate"/>
+        <responderParty name="pseudoplatform"/>
+        <!-- ONBOARDED_RESPONDERS -->
+      </responderParties>
+      <legs>
+        <leg name="eftiGateLeg"/>
+      </legs>
+    </process>
+  </businessProcesses>
+</db:configuration>

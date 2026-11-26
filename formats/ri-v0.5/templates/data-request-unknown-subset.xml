@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fault injection: the access rights list a subset ID that denotes no eFTI data subset -->
+<uilQuery xmlns="http://efti.eu/v1/edelivery" requestId="{{requestId}}">
+  <uil>
+    <gateId>{{gateId}}</gateId>
+    <platformId>{{platformId}}</platformId>
+    <datasetId>{{datasetId}}</datasetId>
+  </uil>
+  {{#subsetIds}}<subsetId>{{.}}</subsetId>{{/subsetIds}}
+  <subsetId>EU99</subsetId>
+</uilQuery>
