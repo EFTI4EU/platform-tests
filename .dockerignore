@@ -1,0 +1,9 @@
+# Build context of the pseudo-platform and runner images (the repository root)
+**/target
+deploy/
+.claude/
+.git/
+docs/
+.idea/
+.vscode/
+**/.DS_Store

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Requirements of the Draft Delegated Act on the Certification of eFTI Platforms — Mapping to Test Cases and Checklist Items</title>
+<style>
+  :root {
+    --ink: #1c2733; --muted: #6b7885; --line: #e2e6ea; --bg: #f6f7f9;
+    --card: #fff; --accent: #3470ac;
+    --tct: #3470ac; --op: #e08a1e; --doc: #9b4f9e;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+         color: var(--ink); background: var(--bg); }
+  .page { max-width: 1300px; margin: 0 auto; padding: 40px 24px 80px; background: var(--card); }
+  h1 { font-size: 24px; margin: 0 0 4px; }
+  .subtitle { color: var(--muted); margin: 0 0 16px; font-size: 15px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 6px 22px; font-size: 13px; color: var(--muted); margin-bottom: 24px; }
+  .legend span::before { content: ""; display: inline-block; width: 12px; height: 12px; border-radius: 3px;
+                         margin-right: 6px; vertical-align: -1px; background: var(--c); }
+  .map { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 0 180px; }
+  .map svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+  .map path { fill: none; stroke-width: 1.5; opacity: .3; transition: opacity .15s; }
+  h2 { font-size: 18px; margin: 0 0 6px; }
+  h3 { font-size: 15px; margin: 22px 0 6px; }
+  h4 { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); margin: 14px 0 6px; }
+  .node { display: flex; gap: 10px; align-items: baseline; padding: 5px 10px; margin: 4px 0; cursor: pointer;
+          border: 1px solid var(--line); border-radius: 6px; background: var(--card); transition: opacity .15s; }
+  .node:hover { border-color: var(--muted); }
+  .node .id { flex: none; font: 600 12px ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--c, var(--muted)); }
+  .node.req { border-left: 5px solid var(--c); }
+  .node.req.split { border-left: 0; padding-left: 15px;
+                    background: linear-gradient(to bottom, var(--op) 50%, var(--doc) 50%) left / 5px 100% no-repeat; }
+  .node.unlinked { color: var(--muted); }
+  .has-selection .node:not(.active) { opacity: .3; }
+  .has-selection .node.active { box-shadow: 0 0 0 1px var(--ink); }
+  .has-selection path { opacity: .05; }
+  .has-selection path.active { opacity: .9; stroke-width: 2; }
+  footer { margin-top: 48px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 12px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<h1>Requirements of the Draft Delegated Act on the Certification of eFTI Platforms — Mapping to Test Cases and Checklist Items</h1>
+<p class="subtitle">Specified requirements of Annex I of the draft delegated act on the certification of eFTI platforms
+(draft of 21 October 2026 on the EU's "Have Your Say" platform) and the test cases of the <a href="https://github.com/EFTI4EU/platform-tests/blob/main/docs/testcase-description.md">automated test suite</a>
+and items of the <a href="requirements-checklist.html">requirements checklist</a> of this repository that address them.
+The colours show the evaluation method the draft assigns to each requirement. Click a requirement, test case, or checklist
+item to highlight its connections; click it again or press Esc to reset.</p>
+<div class="legend" id="legend"></div>
+
+<div class="map" id="map">
+  <svg id="lines"></svg>
+  <div id="requirements"><h2>Annex I requirements</h2></div>
+  <div id="items"><h2>Test cases and checklist items</h2></div>
+</div>
+
+<footer>
+Links follow the "R-…" references in the test case description and the requirements checklist ("Draft DA: R-…").
+A link only states that the test case or checklist item addresses (part of) the requirement, not that it covers its full verification scope.
+</footer>
+
+</div>
+<script>
+const METHODS = {
+  tct: 'Technical conformance testing',
+  op: 'Operational verification',
+  doc: 'Examination of documentation',
+};
+
+// [part, [[category, [[id, specified requirement, evaluation methods]]]]]
+const REQUIREMENTS = [
+  ['Part C - eFTI data requirements', [
+    ['Transport eFTI data', [
+      ['R-D1-01', 'Implementation of eFTI data subset(s) for freight transport by road', ['tct']],
+      ['R-D1-02', 'Implementation of eFTI data subset(s) for freight transport by rail', ['tct']],
+      ['R-D1-03', 'Implementation of eFTI data subset(s) for freight transport by inland waterways', ['tct']],
+      ['R-D1-04', 'Implementation of eFTI data subset(s) for freight transport by air', ['tct']],
+    ]],
+    ['Dangerous goods transport eFTI data', [
+      ['R-D2-01', 'Implementation of the eFTI data subset(s) for dangerous goods transport by road', ['tct']],
+      ['R-D2-02', 'Implementation of the eFTI data subset(s) for dangerous goods transport by rail', ['tct']],
+      ['R-D2-03', 'Implementation of the eFTI data subset(s) for dangerous goods transport by inland waterways', ['tct']],
+    ]],
+    ['Waste shipments eFTI data', [
+      ['R-D3-01', 'Implementation of the eFTI data subset(s) for waste shipments by road', ['tct']],
+      ['R-D3-02', 'Implementation of the eFTI data subset(s) for waste shipments by rail', ['tct']],
+      ['R-D3-03', 'Implementation of the eFTI data subset(s) for waste shipments by inland waterways', ['tct']],
+    ]],
+  ]],
+  ['Part A - General functional requirements', [
+    ['Security of data exchange and external connections', [
+      ['R-G1-01', 'Secure machine-to-machine connection with an eFTI Gate', ['tct']],
+      ['R-G1-02a', 'Secure handling of security keys or certificates of eFTI Gate', ['tct']],
+      ['R-G1-02b', 'Secure handling of security keys or certificates of eFTI Gate', ['doc']],
+      ['R-G1-03', 'Conformity of message exchanges with the eFTI Gate', ['tct']],
+      ['R-G1-04', 'Access points for communication with ICT systems', ['doc']],
+      ['R-G1-05', 'Security keys or certificates of connected tributary ICT systems', ['doc']],
+    ]],
+    ['Access by competent authorities', [
+      ['R-G2-01', 'Validation of eFTI Gate communications', ['tct']],
+      ['R-G2-02', 'eFTI CMDS UUID and officer access rights identification', ['tct']],
+      ['R-G2-03', 'eFTI CMDS response to a valid request', ['tct']],
+      ['R-G2-04', 'Error message when request cannot be processed', ['tct']],
+      ['R-G2-05', 'Processing of follow-up communication', ['tct']],
+      ['R-G2-06a', 'Recording of follow-up communication', ['tct']],
+      ['R-G2-06b', 'Recording of follow-up communication', ['op']],
+      ['R-G2-07', 'Confirmation message receipt of follow-up communication', ['tct']],
+      ['R-G2-08', 'Audit trail of request for access to eFTI data', ['tct']],
+      ['R-G2-09', 'Audit trail of response to request for access to eFTI data', ['tct']],
+      ['R-G2-10', 'Audit trail of follow-up communication', ['tct']],
+    ]],
+    ['Access by business users', [
+      ['R-G3-01', 'Identification and authentication of onboarded users', ['doc']],
+      ['R-G3-02', 'Identification and authentication of non-onboarded user', ['op']],
+      ['R-G3-03', 'Identification, authentication and authorisation every login session', ['op']],
+      ['R-G3-04', 'Termination of the login session of non-onboarded user', ['op']],
+      ['R-G3-05', 'Registry of tributary ICT system business users', ['op']],
+      ['R-G3-06', 'Authorisation registry as separate ICT component', ['doc']],
+      ['R-G3-07', "Primary authoriser management of onboarded users' rights and profiles", ['op']],
+      ['R-G3-08', 'Management of temporary processing rights for non-onboarded users', ['op']],
+      ['R-G3-09', 'Communication of access link and CMDS UUID to non-onboarded users', ['op']],
+      ['R-G3-10', "Verification of onboarded users' processing rights", ['op']],
+      ['R-G3-11', "Verification of non-onboarded users' temporary processing rights", ['op']],
+    ]],
+    ['eFTI CMDS processing operations', [
+      ['R-G4-01', 'Request creation of eFTI CMDS', ['op']],
+      ['R-G4-02', 'Generation of an eFTI CMDS', ['op']],
+      ['R-G4-03', 'Edit eFTI CMDS data elements', ['op']],
+      ['R-G4-04', 'Update of eFTI Gate registry of identifiers', ['tct']],
+      ['R-G4-05', 'Reading of eFTI CMDS data', ['op']],
+      ['R-G4-06', 'Download of eFTI CMDS data, in human-readable format', ['op']],
+      ['R-G4-07', 'Download of eFTI CMDS data, in machine-readable formats', ['op']],
+      ['R-G4-08', 'Consignor, carrier and consignee signature on eFTI CMDS', ['op']],
+      ['R-G4-09', 'Combined transport stamp on eFTI CMDS', ['op']],
+      ['R-G4-10', 'Generation of the Unique Identifying Link (UIL) upon carrier signature', ['tct']],
+      ['R-G4-11', 'Registration of an eFTI CMDS on the eFTI Gate registry of identifiers', ['tct']],
+      ['R-G4-12', 'Assignment of eFTI CMDS status', ['op']],
+      ['R-G4-13', 'User-initiated archival of an eFTI CMDS', ['op']],
+      ['R-G4-14', 'Automatic archival of eFTI CMDS', ['op']],
+      ['R-G4-15', 'Notification to business users of impending automatic archival', ['op']],
+      ['R-G4-16', 'Logging of processing operations on eFTI CMDS', ['op']],
+    ]],
+    ['Human-to-machine interface functions', [
+      ['R-G5-01', 'Access protection features on human-to-machine interfaces', ['op']],
+      ['R-G5-02', 'Download the Unique Identifying Link (UIL)', ['op']],
+      ['R-G5-03', 'Machine readable communication of the UIL to competent authorities', ['op']],
+      ['R-G5-04', 'Display of a human readable copy of the eFTI CMDS', ['op']],
+    ]],
+    ['Storage, retention and deletion', [
+      ['R-G6-01', 'Online storage of active and inactive eFTI CMDS data', ['doc']],
+      ['R-G6-02', "Storage of eFTI CMDS with status 'ready to archive' or 'archived', and corresponding processing operation logs", ['doc']],
+      ['R-G6-03', 'Deletion of personal data after the expiration of the retention periods', ['doc']],
+    ]],
+    ['Transparency to business users', [
+      ['R-G7-01', 'Display of consent messages before processing operation', ['op']],
+      ['R-G7-02', 'Configuration of business users notification preferences', ['op']],
+      ['R-G7-03', 'Delivery of notifications to business users', ['op']],
+    ]],
+  ]],
+  ['Part B - Specific functional requirements', [
+    ['DIWASS connection and security', [
+      ['R-S1-01', 'Access points for communication with DIWASS', ['op', 'doc']],
+      ['R-S1-02', 'Security key of DIWASS', ['op', 'doc']],
+      ['R-S1-03a', 'Application programming interface for consignee signature from DIWASS', ['doc']],
+      ['R-S1-03b', 'Application programming interface for consignee signature from DIWASS', ['op']],
+    ]],
+    ['Waste shipment documents', [
+      ['R-S2-01', 'Retrieval from DIWASS of waste shipment documents', ['op']],
+      ['R-S2-02', 'Reading of waste shipment documents', ['op']],
+      ['R-S2-03', 'Download of waste shipment documents in human-readable format', ['op']],
+      ['R-S2-04', 'Display of waste shipment documents in human-readable format', ['op']],
+    ]],
+    ['Waste-specific processing operations', [
+      ['R-S3-01', 'Submission of waste shipment carrier transfer confirmations', ['op']],
+      ['R-S3-02', 'Edit submitted waste shipment carrier transfer confirmations', ['op']],
+      ['R-S3-03', 'Recording of consignee signature received from DIWASS', ['op']],
+      ['R-S3-04', 'Pre-signature confirmation for waste shipment documents', ['op']],
+    ]],
+  ]],
+];
+
+// Tie-break order for the color of an item's ID
+const METHOD_PRIORITY = ['tct', 'op', 'doc'];
+
+const DATA_REQUIREMENTS = ['R-D1-01', 'R-D1-02', 'R-D1-03', 'R-D1-04', 'R-D2-01', 'R-D2-02', 'R-D2-03', 'R-D3-01', 'R-D3-02', 'R-D3-03'];
+
+// [document, [[group, [[id, title, covered requirements]]]]]
+const ITEMS = [
+  ['Automated test suite', [
+    ['2.1 Lifecycle scenario', [
+      ['T-RUN-01', 'Create data set - draft not visible to authorities', ['R-G2-04', 'R-G4-12']],
+      ['T-RUN-02', 'Carrier signature - activation and registration', ['R-G4-10', 'R-G4-11']],
+      ['T-RUN-03', 'Identifier change on the active data set', ['R-G4-04']],
+      ['T-RUN-04', 'Data request by the competent authority', ['R-G2-02', 'R-G2-03']],
+      ['T-RUN-05', 'Follow-up communication', ['R-G2-05', 'R-G2-07']],
+      ['T-RUN-06', 'Consignee signature - end of the transport operation', ['R-G4-04', 'R-G4-12', 'R-G6-01']],
+    ]],
+    ['2.2 Data conformance checks', [
+      ['T-DAT-01', 'Syntactic validity', ['R-G1-03', 'R-G2-03', 'R-G2-04', 'R-G2-07', 'R-G4-02', ...DATA_REQUIREMENTS]],
+      ['T-DAT-02', 'Known values and status logic', ['R-G2-04']],
+      ['T-DAT-03', 'Composition of the identifier set', ['R-G4-04', 'R-G4-11']],
+      ['T-DAT-04', 'Composition of the returned data set', ['R-G2-03', ...DATA_REQUIREMENTS]],
+      ['T-DAT-05', 'Consistency of identifier values across messages', ['R-G4-04', 'R-G4-11']],
+      ['T-DAT-06', 'Round-trip of the prescribed test content', ['R-G2-03']],
+    ]],
+    ['2.3 Exchange rule tests', [
+      ['T-ALL-01', 'eDelivery/AS4 connection', ['R-G1-01']],
+      ['T-ALL-02', 'Acceptance of validly signed Gate messages', ['R-G1-02a', 'R-G2-01']],
+      ['T-ALL-03', 'Correlation and uniqueness', ['R-G1-03', 'R-G2-07']],
+      ['T-ALL-04', 'Response time', ['R-G2-03']],
+    ]],
+    ['2.4 Negative test cases: connection and transport security', [
+      ['T-NEG-01', 'Rejection of insecure transport configurations', ['R-G1-01']],
+    ]],
+    ['2.4 Negative test cases: data access requests', [
+      ['T-NEG-02', 'Handling of malformed data requests', ['R-G1-03', 'R-G2-04']],
+      ['T-NEG-03', 'Error response for an unknown data set', ['R-G2-04']],
+      ['T-NEG-04', 'Data request: wrong platform or Gate identifier', ['R-G1-03']],
+      ['T-NEG-05', 'Data request with an unknown data subset', ['R-G2-04']],
+    ]],
+    ['2.4 Negative test cases: follow-up communication', [
+      ['T-NEG-06', 'Handling of malformed follow-up communications', ['R-G1-03', 'R-G2-05']],
+      ['T-NEG-07', 'Follow-up: unknown data set', ['R-G2-05']],
+      ['T-NEG-08', 'Follow-up: wrong platform or Gate identifier', ['R-G1-03']],
+      ['T-NEG-09', 'Follow-up: unknown request ID', ['R-G2-05']],
+      ['T-NEG-10', 'Follow-up: request ID and data set ID do not belong together', ['R-G2-05']],
+    ]],
+  ]],
+  ['Requirements checklist', [
+    ['CON - Secure connections to external systems', [
+      ['CON-01', 'Conformant eDelivery AS4 solution', ['R-G1-01', 'R-G1-02a', 'R-G1-02b', 'R-G2-01']],
+      ['CON-02', 'Tributary and external ICT systems', ['R-G1-04', 'R-G1-05']],
+    ]],
+    ['IAM - User management: identification, authentication, and authorisation', [
+      ['IAM-01', 'Electronic identification at assurance level "substantial" for onboarded users', ['R-G3-01']],
+      ['IAM-02', 'Authorisation registry', ['R-G3-06']],
+      ['IAM-03', 'Onboarding and authoriser roles', ['R-G3-07', 'R-G3-08']],
+      ['IAM-04', 'Non-onboarded users', ['R-G3-02', 'R-G3-04', 'R-G3-09']],
+      ['IAM-05', 'IAA before any processing, for each session', ['R-G3-03', 'R-G3-10', 'R-G3-11']],
+      ['IAM-06', 'Tributary ICT systems', ['R-G3-05']],
+    ]],
+    ['DATA - Working with eFTI data sets', [
+      ['DATA-01', 'Consent message before processing operations', ['R-G7-01']],
+      ['DATA-02', 'Functionality to create and generate data sets', ['R-G4-01', 'R-G4-02', 'R-G4-12']],
+      ['DATA-03', 'Functionality to edit with validation', ['R-G4-03']],
+      ['DATA-04', 'Functionality to read and download', ['R-G4-05', 'R-G4-06', 'R-G4-07']],
+      ['DATA-05', 'Electronic signatures and seals', ['R-G4-08', 'R-G4-09']],
+      ['DATA-06', 'Status management and archiving', ['R-G4-12', 'R-G4-13', 'R-G4-14', 'R-G4-15']],
+    ]],
+    ['LOG - Audit trail and logging', [
+      ['LOG-01', 'Audit trail of the Gate exchange', ['R-G2-08', 'R-G2-09', 'R-G4-04', 'R-G4-11']],
+      ['LOG-02', 'Audit trail of follow-up communications', ['R-G2-06a', 'R-G2-06b', 'R-G2-10']],
+      ['LOG-03', 'Logging of all business user operations', ['R-G4-16', 'R-G4-01', 'R-G4-02', 'R-G4-03', 'R-G4-05', 'R-G4-06',
+        'R-G4-07', 'R-G4-08', 'R-G4-09', 'R-G4-13', 'R-S2-03', 'R-S2-04', 'R-S3-01', 'R-S3-02', 'R-S3-03']],
+      ['LOG-04', 'Provision of the operations log', ['R-G6-02']],
+      ['LOG-05', 'Log integrity', ['R-G2-08', 'R-G2-09', 'R-G2-10']],
+    ]],
+    ['STOR - Storage, availability, retention, and deletion', [
+      ['STOR-01', 'Online availability', ['R-G6-01']],
+      ['STOR-02', 'Retention of archived data and logs', ['R-G6-02', 'R-G3-08', 'R-G3-10']],
+      ['STOR-03', 'Deletion of personal data (GDPR)', ['R-G6-03']],
+      ['STOR-04', 'Storage location within the Union', []],
+      ['STOR-05', 'Backup and recovery', []],
+      ['STOR-06', 'Data protection and information security', []],
+    ]],
+    ['NTF - Notifications and reports', [
+      ['NTF-01', 'Configuration of notification preferences', ['R-G7-02']],
+      ['NTF-02', 'Delivery and content of notifications', ['R-G7-03']],
+    ]],
+    ['HMI - User interface features for checks', [
+      ['HMI-01', 'UIL download and communication', ['R-G5-02', 'R-G5-03']],
+      ['HMI-02', 'Human-readable copy with time stamp', ['R-G5-04', 'R-G4-06']],
+      ['HMI-03', 'Access protection on end devices', ['R-G5-01']],
+    ]],
+    ['W - Waste shipments / DIWASS', [
+      ['W-00', 'No waste shipments', []],
+      ['W-01', 'DIWASS connection and security', ['R-S1-01', 'R-S1-02', 'R-S1-03a']],
+      ['W-02', 'Waste shipment documents', ['R-S2-01', 'R-S2-02', 'R-S2-03', 'R-S2-04']],
+      ['W-03', 'Waste-specific processing operations', ['R-S1-03b', 'R-S3-01', 'R-S3-02', 'R-S3-03', 'R-S3-04']],
+    ]],
+  ]],
+];
+
+const map = document.getElementById('map');
+const svg = document.getElementById('lines');
+const nodes = new Map();  // id -> element
+const reqMethods = new Map(REQUIREMENTS.flatMap(([, cats]) => cats.flatMap(([, reqs]) => reqs.map(([id, , m]) => [id, m]))));
+const links = ITEMS.flatMap(([, groups]) => groups.flatMap(([, items]) => items.flatMap(([id, , reqs]) => reqs.map(req => ({ req, item: id })))));
+const unknown = links.filter(l => !reqMethods.has(l.req));
+if (unknown.length) console.error('Unknown requirement IDs:', unknown);
+const linkedIds = new Set(links.flatMap(l => [l.req, l.item]));
+
+function el(tag, attrs = {}, ...children) {
+  const e = document.createElement(tag);
+  Object.assign(e, attrs);
+  e.append(...children);
+  return e;
+}
+
+function nodeEl(id, text, className) {
+  const n = el('div', { className: `node ${className}${linkedIds.has(id) ? '' : ' unlinked'}` },
+               el('span', { className: 'id', textContent: id }), el('span', { textContent: text }));
+  n.dataset.id = id;
+  nodes.set(id, n);
+  return n;
+}
+
+function renderColumn(container, data, renderItem) {
+  data.forEach(([section, groups]) => {
+    container.append(el('h3', { textContent: section }));
+    groups.forEach(([group, items]) => container.append(el('h4', { textContent: group }), ...items.map(renderItem)));
+  });
+}
+
+document.getElementById('legend').append(...Object.entries(METHODS).map(([key, label]) => {
+  const s = el('span', { textContent: label });
+  s.style.setProperty('--c', `var(--${key})`);
+  return s;
+}));
+
+renderColumn(document.getElementById('requirements'), REQUIREMENTS, ([id, text, methods]) => {
+  const n = nodeEl(id, text, `req${methods.length > 1 ? ' split' : ''}`);
+  n.style.setProperty('--c', `var(--${methods[0]})`);
+  n.title = methods.map(m => METHODS[m]).join('; ');
+  return n;
+});
+function dominantMethod(reqs) {
+  const counts = reqs.flatMap(r => reqMethods.get(r) ?? []).reduce((c, m) => ({ ...c, [m]: (c[m] ?? 0) + 1 }), {});
+  const max = Math.max(...Object.values(counts));
+  return METHOD_PRIORITY.find(m => counts[m] === max);
+}
+
+renderColumn(document.getElementById('items'), ITEMS, ([id, title, reqs]) => {
+  const n = nodeEl(id, title, 'item');
+  const method = dominantMethod(reqs);
+  if (method) n.style.setProperty('--c', `var(--${method})`);
+  return n;
+});
+
+const paths = links.map(({ req, item }) => {
+  const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  p.setAttribute('stroke', `var(--${reqMethods.get(req)[0]})`);
+  svg.append(p);
+  return { req, item, p };
+});
+
+function drawLines() {
+  const origin = map.getBoundingClientRect();
+  paths.forEach(({ req, item, p }) => {
+    const a = nodes.get(req).getBoundingClientRect();
+    const b = nodes.get(item).getBoundingClientRect();
+    const x1 = a.right - origin.left, y1 = a.top + a.height / 2 - origin.top;
+    const x2 = b.left - origin.left, y2 = b.top + b.height / 2 - origin.top;
+    const dx = (x2 - x1) / 2;
+    p.setAttribute('d', `M${x1},${y1} C${x1 + dx},${y1} ${x2 - dx},${y2} ${x2},${y2}`);
+  });
+}
+
+let selected = null;
+
+function select(id) {
+  selected = id === selected ? null : id;
+  const active = new Set(selected ? [selected] : []);
+  paths.forEach(({ req, item, p }) => {
+    const on = req === selected || item === selected;
+    p.classList.toggle('active', on);
+    if (on) active.add(req).add(item);
+  });
+  map.classList.toggle('has-selection', selected !== null);
+  nodes.forEach((n, id) => n.classList.toggle('active', active.has(id)));
+}
+
+map.addEventListener('click', e => {
+  const n = e.target.closest('.node');
+  if (n) select(n.dataset.id);
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && selected) select(selected); });
+new ResizeObserver(drawLines).observe(map);
+</script>
+</body>
+</html>

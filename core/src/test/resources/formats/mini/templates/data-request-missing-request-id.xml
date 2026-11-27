@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fault injection: the request ID is missing -->
+<dataRequest xmlns="urn:tst:mini:messages">
+  <uil><gate>{{gateId}}</gate><platform>{{platformId}}</platform><dataset>{{datasetId}}</dataset></uil>
+  {{#subsetIds}}<subset>{{.}}</subset>{{/subsetIds}}
+</dataRequest>

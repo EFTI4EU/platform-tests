@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DS1C: synthetic road consignment with a cabotage operation (Polish carrier, domestic carriage within Germany).
+  Subsets EU01, EU03. Mode of transport: road (3). No dangerous goods. All data are fictitious.
+-->
+<consignment xmlns="http://efti.eu/v1/consignment/common">
+  <carrier>
+    <name>TST Synthetic Carrier Sp. z o.o.</name>
+    <postalAddress>
+      <additionalStreetName>Hala B</additionalStreetName>
+      <buildingNumber>12</buildingNumber>
+      <cityName>Poznan</cityName>
+      <countryCode>PL</countryCode>
+      <countrySubDivisionName>Wielkopolskie</countrySubDivisionName>
+      <postOfficeBox>PO 101</postOfficeBox>
+      <postcode>61-001</postcode>
+      <streetName>ul. Testowa</streetName>
+    </postalAddress>
+  </carrier>
+  <carrierAcceptanceDateTime formatId="205">202609150800+0200</carrierAcceptanceDateTime>
+  <carrierAcceptanceLocation>
+    <postalAddress>
+      <additionalStreetName>Gate 3</additionalStreetName>
+      <buildingNumber>7</buildingNumber>
+      <cityName>Leipzig</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Sachsen</countrySubDivisionName>
+      <postcode>04109</postcode>
+      <streetName>Musterstrasse</streetName>
+    </postalAddress>
+  </carrierAcceptanceLocation>
+  <consignee>
+    <name>TST Synthetic Consignee Handel GmbH</name>
+    <postalAddress>
+      <additionalStreetName>Halle 2</additionalStreetName>
+      <buildingNumber>42</buildingNumber>
+      <cityName>München</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Bayern</countrySubDivisionName>
+      <postOfficeBox>PF 2042</postOfficeBox>
+      <postcode>80331</postcode>
+      <streetName>Beispielweg</streetName>
+    </postalAddress>
+  </consignee>
+  <consigneeReceiptLocation>
+    <postalAddress>
+      <additionalStreetName>Rampe 5</additionalStreetName>
+      <buildingNumber>42</buildingNumber>
+      <cityName>München</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Bayern</countrySubDivisionName>
+      <postcode>80331</postcode>
+      <streetName>Beispielweg</streetName>
+    </postalAddress>
+  </consigneeReceiptLocation>
+  <consignor>
+    <confirmedDocumentAuthentication>
+      <statementCode>1</statementCode>
+    </confirmedDocumentAuthentication>
+    <name>TST Synthetic Consignor &amp; Söhne OHG</name>
+    <postalAddress>
+      <additionalStreetName>Gate 3</additionalStreetName>
+      <buildingNumber>7</buildingNumber>
+      <cityName>Leipzig</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Sachsen</countrySubDivisionName>
+      <departmentName>Shipping department</departmentName>
+      <postOfficeBox>PF 1007</postOfficeBox>
+      <postcode>04109</postcode>
+      <streetName>Musterstrasse</streetName>
+    </postalAddress>
+  </consignor>
+  <grossWeight unitId="KGM">12500</grossWeight>
+  <mainCarriageTransportMovement>
+    <dangerousGoodsIndicator>false</dangerousGoodsIndicator>
+    <modeCode>3</modeCode>
+    <usedTransportMeans>
+      <id>BAB132</id>
+      <registrationCountry>
+        <code>PL</code>
+      </registrationCountry>
+      <typeCode>31</typeCode>
+    </usedTransportMeans>
+  </mainCarriageTransportMovement>
+  <natureIdentificationCargo>
+    <identificationText>Machine parts on 24 euro pallets: steel flanges, gaskets and ball bearings, packed in cardboard boxes, stretch-wrapped. Free-text element filled to its maximum length of 512 characters for the round-trip test, padded with digits: 012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901</identificationText>
+  </natureIdentificationCargo>
+  <transportPackage>
+    <itemQuantity>24</itemQuantity>
+    <shippingMarks>
+      <markingText>TST-MARK-0024</markingText>
+    </shippingMarks>
+    <typeCode>PX</typeCode>
+  </transportPackage>
+  <usedTransportEquipment>
+    <categoryCode>TE</categoryCode>
+    <id>PO4711T</id>
+    <registrationCountry>
+      <code>PL</code>
+    </registrationCountry>
+    <sequenceNumber>1</sequenceNumber>
+  </usedTransportEquipment>
+</consignment>

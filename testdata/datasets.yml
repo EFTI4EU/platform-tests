@@ -1,0 +1,60 @@
+# The test data sets: what the runner and report need to know about each, independent of the message format.
+# The XML is formats/<version>/testdata/<testData>.xml. The first subset is the one requested alone in T-RUN-04 (b).
+datasets:
+  - key: DS1
+    title: Road (basic road, P01)
+    profile: Basic road (P01)
+    testData: ds1-road
+    subsets: [EU01, EU02]
+    transportMeansTypo: BAB132
+    transportMeansCorrected: BAB123
+  - key: DS1C
+    title: Road cabotage (optional)
+    testData: ds1c-road-cabotage
+    subsets: [EU01, EU03]
+    transportMeansTypo: BAB132
+    transportMeansCorrected: BAB123
+  - key: DS1-DG
+    title: Dangerous goods road (P05)
+    profile: Dangerous goods road (P05)
+    testData: ds1-road-dg
+    subsets: [EU01, EU02, EU05a]
+    transportMeansTypo: BAB132
+    transportMeansCorrected: BAB123
+  - key: DS2
+    title: Rail (basic rail, P02)
+    profile: Basic rail (P02)
+    testData: ds2-rail
+    subsets: [EU01]
+    transportMeansTypo: "918061870132"
+    transportMeansCorrected: "918061870123"
+  - key: DS2-DG
+    title: Dangerous goods rail (P05)
+    profile: Dangerous goods rail (P05)
+    testData: ds2-rail-dg
+    subsets: [EU01, EU05b]
+    transportMeansTypo: "918061870132"
+    transportMeansCorrected: "918061870123"
+  - key: DS3
+    title: Inland waterways (basic inland waterways, P03)
+    profile: Basic inland waterways (P03)
+    testData: ds3-inland-waterways
+    subsets: [EU01]
+    transportMeansTypo: "04807132"
+    transportMeansCorrected: "04807123"
+  - key: DS3-DG
+    title: Dangerous goods inland waterways (P05)
+    profile: Dangerous goods inland waterways (P05)
+    testData: ds3-inland-waterways-dg
+    subsets: [EU01, EU05c]
+    transportMeansTypo: "04807132"
+    transportMeansCorrected: "04807123"
+  - key: DS4
+    title: Air (basic aviation, P04)
+    profile: Basic aviation (P04)
+    testData: ds4-air
+    subsets: [EU06]
+    transportMeansTypo: D-ASTT
+    transportMeansCorrected: D-ATST
+  - key: W
+    title: Waste shipments variant (P06)

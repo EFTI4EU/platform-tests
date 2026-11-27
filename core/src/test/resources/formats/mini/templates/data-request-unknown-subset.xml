@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataRequest xmlns="urn:tst:mini:messages" requestId="{{requestId}}">
+  <uil><gate>{{gateId}}</gate><platform>{{platformId}}</platform><dataset>{{datasetId}}</dataset></uil>
+  {{#subsetIds}}<subset>{{.}}</subset>{{/subsetIds}}
+  <subset>S99</subset>
+</dataRequest>

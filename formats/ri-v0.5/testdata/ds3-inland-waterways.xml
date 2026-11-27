@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DS3: synthetic inland waterway consignment on a pushed dry cargo barge without engine (port of Duisburg to port of Rotterdam).
+  Subset EU01. Mode of transport: inland waterway (8). No dangerous goods. All data are fictitious.
+-->
+<consignment xmlns="http://efti.eu/v1/consignment/common">
+  <carrierAcceptanceDateTime formatId="205">202609150800+0200</carrierAcceptanceDateTime>
+  <carrierAcceptanceLocation>
+    <postalAddress>
+      <additionalStreetName>Kai 12</additionalStreetName>
+      <buildingNumber>1</buildingNumber>
+      <cityName>Duisburg</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Nordrhein-Westfalen</countrySubDivisionName>
+      <postcode>47119</postcode>
+      <streetName>TST Synthetic Hafenkai Ruhrort-Süd</streetName>
+    </postalAddress>
+  </carrierAcceptanceLocation>
+  <consigneeReceiptLocation>
+    <postalAddress>
+      <additionalStreetName>Kade 7</additionalStreetName>
+      <buildingNumber>30</buildingNumber>
+      <cityName>Rotterdam</cityName>
+      <countryCode>NL</countryCode>
+      <countrySubDivisionName>Zuid-Holland</countrySubDivisionName>
+      <postcode>3011 AB</postcode>
+      <streetName>Synthetische Havenstraat</streetName>
+    </postalAddress>
+  </consigneeReceiptLocation>
+  <consignor>
+    <name>TST Synthetic Consignor &amp; Kähne OHG</name>
+    <postalAddress>
+      <additionalStreetName>Kai 12</additionalStreetName>
+      <buildingNumber>1</buildingNumber>
+      <cityName>Duisburg</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Nordrhein-Westfalen</countrySubDivisionName>
+      <departmentName>TST Synthetic Port Shipping Dept. 1</departmentName>
+      <postOfficeBox>PF 3001</postOfficeBox>
+      <postcode>47119</postcode>
+      <streetName>TST Synthetic Hafenkai Ruhrort-Süd</streetName>
+    </postalAddress>
+  </consignor>
+  <grossWeight unitId="KGM">850000</grossWeight>
+  <mainCarriageTransportMovement>
+    <dangerousGoodsIndicator>false</dangerousGoodsIndicator>
+    <modeCode>8</modeCode>
+    <usedTransportMeans>
+      <id>04807132</id>
+      <registrationCountry>
+        <code>DE</code>
+      </registrationCountry>
+    </usedTransportMeans>
+  </mainCarriageTransportMovement>
+</consignment>

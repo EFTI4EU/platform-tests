@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DS2: synthetic international rail consignment in one rail wagon (freight station München to freight station Wien).
+  Subset EU01. Mode of transport: rail (2). No dangerous goods. All data are fictitious.
+-->
+<consignment xmlns="http://efti.eu/v1/consignment/common">
+  <carrierAcceptanceDateTime formatId="205">202609150800+0200</carrierAcceptanceDateTime>
+  <carrierAcceptanceLocation>
+    <postalAddress>
+      <additionalStreetName>Gleis 4</additionalStreetName>
+      <buildingNumber>3</buildingNumber>
+      <cityName>München</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Bayern</countrySubDivisionName>
+      <postcode>80687</postcode>
+      <streetName>TST Synthetic Gueterbahnhof-Strasse</streetName>
+    </postalAddress>
+  </carrierAcceptanceLocation>
+  <consigneeReceiptLocation>
+    <postalAddress>
+      <additionalStreetName>Gleis 2</additionalStreetName>
+      <buildingNumber>15</buildingNumber>
+      <cityName>Wien</cityName>
+      <countryCode>AT</countryCode>
+      <countrySubDivisionName>Wien</countrySubDivisionName>
+      <postcode>1100</postcode>
+      <streetName>Frachtenbahnhofstrasse</streetName>
+    </postalAddress>
+  </consigneeReceiptLocation>
+  <consignor>
+    <name>TST Synthetic Consignor &amp; Böhm GmbH</name>
+    <postalAddress>
+      <additionalStreetName>Gleis 4</additionalStreetName>
+      <buildingNumber>3</buildingNumber>
+      <cityName>München</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Bayern</countrySubDivisionName>
+      <departmentName>TST Synthetic Rail Dispatch Dept. 1</departmentName>
+      <postOfficeBox>PF 2001</postOfficeBox>
+      <postcode>80687</postcode>
+      <streetName>TST Synthetic Gueterbahnhof-Strasse</streetName>
+    </postalAddress>
+  </consignor>
+  <grossWeight unitId="KGM">24000</grossWeight>
+  <mainCarriageTransportMovement>
+    <dangerousGoodsIndicator>false</dangerousGoodsIndicator>
+    <modeCode>2</modeCode>
+    <usedTransportMeans>
+      <id>918061870132</id>
+      <registrationCountry>
+        <code>DE</code>
+      </registrationCountry>
+    </usedTransportMeans>
+  </mainCarriageTransportMovement>
+  <usedTransportEquipment>
+    <categoryCode>RR</categoryCode>
+    <id>318047110025</id>
+    <registrationCountry>
+      <code>DE</code>
+    </registrationCountry>
+    <sequenceNumber>1</sequenceNumber>
+  </usedTransportEquipment>
+</consignment>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fault injection: the request ID and the ID of the referenced data request, either of which the acknowledgement
+     may echo, are missing -->
+<postFollowUpRequest xmlns="http://efti.eu/v1/edelivery">
+  <uil>
+    <gateId>{{gateId}}</gateId>
+    <platformId>{{platformId}}</platformId>
+    <datasetId>{{datasetId}}</datasetId>
+  </uil>
+  <message>{{message}}</message>
+</postFollowUpRequest>

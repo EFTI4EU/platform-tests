@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Fault injection: all references present, but the mandatory text is missing -->
+<followUp xmlns="urn:tst:mini:messages" requestId="{{requestId}}" dataRequestId="{{referencedRequestId}}">
+  <uil><gate>{{gateId}}</gate><platform>{{platformId}}</platform><dataset>{{datasetId}}</dataset></uil>
+</followUp>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Data set of the synthetic test format, annotated with subsets in the vocabulary of ri-v0.5. The root (not
+  annotated) has the annotation ID R. Covered: the complex types Party and Event shared between two contexts with one
+  annotation per context, repeatable (item, equipment) and non-repeatable (vehicle) aggregates, nested required
+  aggregates (receiver/address/city), elements mandatory in one subset and optional in another (sender/name), a
+  conditional element (hazard), a composite status (carried), an element with simple content and an attribute
+  (weight), a free-text type whose whitespace counts (Text, the names; all other text values are tokens) and a subset
+  none of whose elements belongs to S1 or S2 (S3).
+-->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:d="urn:tst:mini:dataset"
+            targetNamespace="urn:tst:mini:dataset" elementFormDefault="qualified">
+  <xsd:element name="shipment" type="d:Shipment"/>
+
+  <xsd:complexType name="Shipment">
+    <xsd:sequence>
+      <xsd:element name="acceptedAt" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="A" parentId="R"><subset id="S1" status="O"/><subset id="S2" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="sender" type="d:Party" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="P1" parentId="R"><subset id="S1" status="SI"/><subset id="S2" status="SI"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="receiver" type="d:Party" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="P2" parentId="R"><subset id="S2" status="SI"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="vehicle" type="d:Vehicle" minOccurs="0" maxOccurs="1">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="V" parentId="R"><subset id="S1" status="SI"/><subset id="S2" status="SI"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="weight" type="d:Weight" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="W" parentId="R"><subset id="S2" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="item" type="d:Item" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="IT" parentId="R"><subset id="S1" status="SI"/><subset id="S2" status="SI"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="equipment" type="d:Equipment" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="EQ" parentId="R"><subset id="S2" status="SI"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="hazard" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="HZ" parentId="R"><subset id="S1" status="C"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="delivery" type="d:Event" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="DE" parentId="R"><subset id="S1" status="O"/><subset id="S2" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="mode" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="MO" parentId="R"><subset id="S3" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="dangerous" type="xsd:boolean" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="DG" parentId="R"><subset id="S3" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="Text">
+    <xsd:restriction base="xsd:string">
+      <xsd:maxLength value="70"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:complexType name="Party">
+    <xsd:sequence>
+      <xsd:element name="name" type="d:Text" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="N1" parentId="P1"><subset id="S1" status="M"/><subset id="S2" status="O"/></efti>
+          <efti id="N2" parentId="P2"><subset id="S2" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="department" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="D1" parentId="P1"><subset id="S1" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="address" type="d:Address" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="AD1" parentId="P1"><subset id="S1" status="SI"/></efti>
+          <efti id="AD2" parentId="P2"><subset id="S2" status="SI"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="signature" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="SG" parentId="P2"><subset id="S2" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Address">
+    <xsd:sequence>
+      <xsd:element name="street" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="ST1" parentId="AD1"><subset id="S1" status="O"/></efti>
+          <efti id="ST2" parentId="AD2"><subset id="S2" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="city" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="C1" parentId="AD1"><subset id="S1" status="O"/></efti>
+          <efti id="C2" parentId="AD2"><subset id="S2" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Vehicle">
+    <xsd:sequence>
+      <xsd:element name="plate" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="VP" parentId="V"><subset id="S1" status="M"/><subset id="S2" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="country" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="VC" parentId="V"><subset id="S1" status="M"/><subset id="S2" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Weight">
+    <xsd:simpleContent>
+      <xsd:extension base="xsd:decimal">
+        <xsd:attribute name="unit" type="xsd:token" use="required"/>
+      </xsd:extension>
+    </xsd:simpleContent>
+  </xsd:complexType>
+
+  <xsd:complexType name="Item">
+    <xsd:sequence>
+      <xsd:element name="count" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="IC" parentId="IT"><subset id="S1" status="M"/><subset id="S2" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="kind" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="IK" parentId="IT"><subset id="S2" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Equipment">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="EI" parentId="EQ"><subset id="S2" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="country" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="EC" parentId="EQ"><subset id="S2" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="category" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="EK" parentId="EQ"><subset id="S2" status="M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="seq" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="ES" parentId="EQ"><subset id="S3" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="carried" type="d:Carried" minOccurs="0" maxOccurs="unbounded">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="CA" parentId="EQ"><subset id="S2" status="SI"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Carried">
+    <xsd:sequence>
+      <xsd:element name="id" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="CI" parentId="CA"><subset id="S2" status="C/M"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+      <xsd:element name="seq" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="CS" parentId="CA"><subset id="S3" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:complexType name="Event">
+    <xsd:sequence>
+      <xsd:element name="at" type="xsd:token" minOccurs="0">
+        <xsd:annotation><xsd:appinfo>
+          <efti id="DA" parentId="DE"><subset id="S1" status="O"/><subset id="S2" status="O"/></efti>
+          <efti id="UA" parentId="UN"><subset id="S2" status="O"/></efti>
+        </xsd:appinfo></xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

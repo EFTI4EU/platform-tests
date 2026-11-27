@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<upload xmlns="urn:tst:mini:messages" requestId="{{requestId}}" datasetId="{{datasetId}}">
+  {{{identifiers}}}
+</upload>

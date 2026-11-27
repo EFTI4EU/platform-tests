@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  DS2-DG: DS2 with dangerous goods on board (UN 1263 paint in steel drums, RID).
+  Subsets EU01, EU05b. Mode of transport: rail (2). All data are fictitious.
+-->
+<consignment xmlns="http://efti.eu/v1/consignment/common">
+  <carrierAcceptanceDateTime formatId="205">202609150800+0200</carrierAcceptanceDateTime>
+  <carrierAcceptanceLocation>
+    <postalAddress>
+      <additionalStreetName>Gleis 4</additionalStreetName>
+      <buildingNumber>3</buildingNumber>
+      <cityName>München</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Bayern</countrySubDivisionName>
+      <postcode>80687</postcode>
+      <streetName>TST Synthetic Gueterbahnhof-Strasse</streetName>
+    </postalAddress>
+  </carrierAcceptanceLocation>
+  <consignee>
+    <name>TST Synthetic Consignee Wien GmbH</name>
+    <postalAddress>
+      <buildingNumber>15</buildingNumber>
+      <cityName>Wien</cityName>
+      <countryCode>AT</countryCode>
+      <postcode>1100</postcode>
+      <streetName>Frachtenbahnhofstrasse</streetName>
+    </postalAddress>
+  </consignee>
+  <consigneeReceiptLocation>
+    <postalAddress>
+      <additionalStreetName>Gleis 2</additionalStreetName>
+      <buildingNumber>15</buildingNumber>
+      <cityName>Wien</cityName>
+      <countryCode>AT</countryCode>
+      <countrySubDivisionName>Wien</countrySubDivisionName>
+      <postcode>1100</postcode>
+      <streetName>Frachtenbahnhofstrasse</streetName>
+    </postalAddress>
+  </consigneeReceiptLocation>
+  <consignor>
+    <name>TST Synthetic Consignor &amp; Böhm GmbH</name>
+    <postalAddress>
+      <additionalStreetName>Gleis 4</additionalStreetName>
+      <buildingNumber>3</buildingNumber>
+      <cityName>München</cityName>
+      <countryCode>DE</countryCode>
+      <countrySubDivisionName>Bayern</countrySubDivisionName>
+      <departmentName>TST Synthetic Rail Dispatch Dept. 1</departmentName>
+      <postOfficeBox>PF 2001</postOfficeBox>
+      <postcode>80687</postcode>
+      <streetName>TST Synthetic Gueterbahnhof-Strasse</streetName>
+    </postalAddress>
+  </consignor>
+  <grossWeight unitId="KGM">24000</grossWeight>
+  <includedConsignmentItem>
+    <transportDangerousGoods>
+      <dangerousGoodsLogisticsPackage>
+        <itemQuantity>24</itemQuantity>
+        <shippingMarks>
+          <markingText>3</markingText>
+        </shippingMarks>
+        <typeText>Steel drum</typeText>
+      </dangerousGoodsLogisticsPackage>
+      <grossWeight unitId="KGM">840</grossWeight>
+      <hazardTypeCode>3</hazardTypeCode>
+      <packagingDangerLevelCode>II</packagingDangerLevelCode>
+      <technicalName>PAINT</technicalName>
+      <uNDGID>1263</uNDGID>
+    </transportDangerousGoods>
+  </includedConsignmentItem>
+  <mainCarriageTransportMovement>
+    <dangerousGoodsIndicator>true</dangerousGoodsIndicator>
+    <modeCode>2</modeCode>
+    <usedTransportMeans>
+      <id>918061870132</id>
+      <registrationCountry>
+        <code>DE</code>
+      </registrationCountry>
+    </usedTransportMeans>
+  </mainCarriageTransportMovement>
+  <usedTransportEquipment>
+    <categoryCode>RR</categoryCode>
+    <id>318047110025</id>
+    <registrationCountry>
+      <code>DE</code>
+    </registrationCountry>
+    <sequenceNumber>1</sequenceNumber>
+  </usedTransportEquipment>
+</consignment>

@@ -1,0 +1,180 @@
+{
+  "sections": [
+    {
+      "id": "2.1",
+      "title": "Lifecycle scenario (per data set)",
+      "perDataset": true,
+      "testCases": [
+        {
+          "id": "T-RUN-01",
+          "title": "Create data set - draft not visible to authorities",
+          "choreographed": true
+        },
+        {
+          "id": "T-RUN-02",
+          "title": "Carrier signature - activation and registration",
+          "choreographed": true
+        },
+        {
+          "id": "T-RUN-03",
+          "title": "Identifier change on the active data set",
+          "choreographed": true
+        },
+        {
+          "id": "T-RUN-04",
+          "title": "Data request by the competent authority",
+          "choreographed": false
+        },
+        {
+          "id": "T-RUN-05",
+          "title": "Follow-up communication",
+          "choreographed": false
+        },
+        {
+          "id": "T-RUN-06",
+          "title": "Consignee signature - end of the transport operation",
+          "choreographed": true
+        }
+      ]
+    },
+    {
+      "id": "2.2",
+      "title": "Data conformance checks (per data set)",
+      "perDataset": true,
+      "testCases": [
+        {
+          "id": "T-DAT-01",
+          "title": "Syntactic validity",
+          "tag": "all messages",
+          "choreographed": false
+        },
+        {
+          "id": "T-DAT-02",
+          "title": "Known values and status logic",
+          "tag": "all messages",
+          "choreographed": false
+        },
+        {
+          "id": "T-DAT-03",
+          "title": "Composition of the identifier set",
+          "tag": "identifier upload / update (FTI004)",
+          "choreographed": false
+        },
+        {
+          "id": "T-DAT-04",
+          "title": "Composition of the returned data set",
+          "tag": "data response (FTI010)",
+          "choreographed": false
+        },
+        {
+          "id": "T-DAT-05",
+          "title": "Consistency of identifier values across messages",
+          "tag": "identifier upload (FTI004) / data response (FTI010)",
+          "choreographed": false
+        },
+        {
+          "id": "T-DAT-06",
+          "title": "Round-trip of the prescribed test content",
+          "tag": "test only",
+          "choreographed": false
+        }
+      ]
+    },
+    {
+      "id": "2.3",
+      "title": "Exchange rule tests (run-wide)",
+      "perDataset": false,
+      "testCases": [
+        {
+          "id": "T-ALL-01",
+          "title": "eDelivery/AS4 connection",
+          "choreographed": false
+        },
+        {
+          "id": "T-ALL-02",
+          "title": "Acceptance of validly signed Gate messages",
+          "choreographed": false
+        },
+        {
+          "id": "T-ALL-03",
+          "title": "Correlation and uniqueness",
+          "choreographed": false
+        },
+        {
+          "id": "T-ALL-04",
+          "title": "Response time",
+          "choreographed": false
+        }
+      ]
+    },
+    {
+      "id": "2.4",
+      "title": "Negative test cases",
+      "perDataset": false,
+      "testCases": [
+        {
+          "id": "T-NEG-01",
+          "title": "Rejection of insecure transport configurations",
+          "group": "Connection and transport security",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-02",
+          "title": "Handling of malformed data requests",
+          "group": "Data access requests",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-03",
+          "title": "Error response for an unknown data set",
+          "group": "Data access requests",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-04",
+          "title": "Data request: wrong platform or Gate identifier",
+          "group": "Data access requests",
+          "tag": "informative",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-05",
+          "title": "Data request with an unknown data subset",
+          "group": "Data access requests",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-06",
+          "title": "Handling of malformed follow-up communications",
+          "group": "Follow-up communication",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-07",
+          "title": "Follow-up: unknown data set",
+          "group": "Follow-up communication",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-08",
+          "title": "Follow-up: wrong platform or Gate identifier",
+          "group": "Follow-up communication",
+          "tag": "informative",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-09",
+          "title": "Follow-up: unknown request ID",
+          "group": "Follow-up communication",
+          "choreographed": false
+        },
+        {
+          "id": "T-NEG-10",
+          "title": "Follow-up: request ID and data set ID do not belong together",
+          "group": "Follow-up communication",
+          "choreographed": false
+        }
+      ]
+    }
+  ]
+}

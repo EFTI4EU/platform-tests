@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Messages of the synthetic test format; deliberately unlike ri-v0.5, so that tests cannot rely on its names -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:m="urn:tst:mini:messages"
+            xmlns:d="urn:tst:mini:dataset" xmlns:i="urn:tst:mini:identifiers"
+            targetNamespace="urn:tst:mini:messages" elementFormDefault="qualified">
+  <xsd:import namespace="urn:tst:mini:dataset" schemaLocation="dataset.xsd"/>
+  <xsd:import namespace="urn:tst:mini:identifiers" schemaLocation="identifiers.xsd"/>
+
+  <xsd:complexType name="Uil">
+    <xsd:sequence>
+      <xsd:element name="gate" type="xsd:token"/>
+      <xsd:element name="platform" type="xsd:token"/>
+      <xsd:element name="dataset" type="xsd:token"/>
+    </xsd:sequence>
+  </xsd:complexType>
+
+  <xsd:simpleType name="Status">
+    <xsd:restriction base="xsd:token">
+      <xsd:pattern value="[0-9]{3}"/>
+    </xsd:restriction>
+  </xsd:simpleType>
+
+  <xsd:element name="dataRequest">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="uil" type="m:Uil"/>
+        <xsd:element name="subset" type="xsd:token" maxOccurs="unbounded"/>
+      </xsd:sequence>
+      <xsd:attribute name="requestId" type="xsd:token" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="dataResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="uil" type="m:Uil" minOccurs="0"/>
+        <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+        <xsd:element ref="d:shipment" minOccurs="0"/>
+      </xsd:sequence>
+      <xsd:attribute name="requestId" type="xsd:token" use="required"/>
+      <xsd:attribute name="status" type="m:Status" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="followUp">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="uil" type="m:Uil"/>
+        <xsd:element name="text" type="xsd:string"/>
+      </xsd:sequence>
+      <xsd:attribute name="requestId" type="xsd:token" use="required"/>
+      <xsd:attribute name="dataRequestId" type="xsd:token" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="followUpAck">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+      <xsd:attribute name="requestId" type="xsd:token" use="required"/>
+      <xsd:attribute name="status" type="m:Status" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="upload">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="i:shipment"/>
+      </xsd:sequence>
+      <xsd:attribute name="requestId" type="xsd:token" use="required"/>
+      <xsd:attribute name="datasetId" type="xsd:token" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="uploadStatus">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="description" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+      <xsd:attribute name="requestId" type="xsd:token" use="required"/>
+      <xsd:attribute name="status" type="m:Status" use="required"/>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="902" height="580" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif" viewBox="-1 -1 902 580" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="What this repository contains: an automated test suite for the requirements observable at the interface to the eFTI Gate and a checklist of the platform-internal requirements">
+<rect x="-1" y="-1" width="100%" height="100%" fill="#fff"/>
+<style>
+text { fill: #1c2733; font-size: 14.5px; }
+.t-head { font-size: 16px; font-weight: 700; }
+.link { stroke: #6b7885; stroke-width: 2; fill: none; }
+g > rect { stroke-width: 1.5; }
+.c-green rect { fill: #d8ebc2; stroke: #7dbb3d; }
+.c-yellow rect { fill: #fdf1b9; stroke: #f4d01c; }
+.c-red rect { fill: #e6c4c2; stroke: #ad3735; }
+.c-grey rect { fill: #e5e5e5; stroke: #808080; }
+</style>
+<defs><marker id="arrow" viewBox="0 0 14 14" refX="10.5" refY="7" markerWidth="14" markerHeight="14" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M4.5 3.5 L10.5 7 L4.5 10.5" fill="none" stroke="#6b7885" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+
+<g class="c-grey"><rect x="20" y="0" width="860" height="40" rx="6"/><text x="450" y="25.5" text-anchor="middle" class="t-head">Requirements for eFTI platforms</text></g>
+<path class="link" d="M227 40 L227 62" marker-end="url(#arrow)"/><path class="link" d="M673 40 L673 62" marker-end="url(#arrow)"/>
+<g class="c-red"><rect x="20" y="66" width="414" height="116" rx="6"/><text x="34" y="90" class="t-head">Important for authorities:</text><text x="34" y="108" class="t-head">does the right data arrive?</text><text x="34" y="130">• secure connection between platform and Gate</text><text x="34" y="147">• search, data retrieval, and follow-up communication</text><text x="34" y="164">• data format &amp; content correct</text></g>
+<g class="c-yellow"><rect x="466" y="66" width="414" height="116" rx="6"/><text x="480" y="90" class="t-head">Protects EOs and data subjects,</text><text x="480" y="108" class="t-head">largely enforced elsewhere</text><text x="480" y="130">• user management, audit trail (CRA, NIS2, civil liability)</text><text x="480" y="147">• storage, deletion periods (GDPR); signatures (eIDAS)</text><text x="480" y="164">• user interface, notifications (civil liability)</text></g>
+
+<svg x="0" y="202" width="900" height="240" viewBox="0 0 900 240">
+<defs>
+<g id="i-person"><circle cx="20" cy="9" r="8" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><path d="M6 36q0-14 14-14t14 14v16H6z" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><rect x="9" y="52" width="8" height="18" rx="2" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><rect x="23" y="52" width="8" height="18" rx="2" fill="#fff" stroke="#1c2733" stroke-width="1.6"/></g>
+<g id="i-officer"><circle cx="20" cy="13" r="8" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><path d="M8 11Q20-5 32 11Z" fill="#3470ac" stroke="#1c2733" stroke-width="1.2" stroke-linejoin="round"/><rect x="6" y="10" width="28" height="3.5" rx="1.5" fill="#1c2733"/><circle cx="20" cy="5.5" r="1.6" fill="#fff"/><path d="M6 38q0-14 14-14t14 14v14H6z" fill="#3470ac" stroke="#1c2733" stroke-width="1.6"/><rect x="9" y="52" width="8" height="18" rx="2" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><rect x="23" y="52" width="8" height="18" rx="2" fill="#fff" stroke="#1c2733" stroke-width="1.6"/></g>
+<g id="i-truck"><rect x="1" y="6" width="72" height="34" rx="3" fill="#d0e0f0" stroke="#1c2733" stroke-width="1.6"/><path d="M73 13h18a5 5 0 0 1 4 2l9 12v13H73z" fill="#fff" stroke="#1c2733" stroke-width="1.6" stroke-linejoin="round"/><path d="M77 17h13a3 3 0 0 1 2.5 1.5L98 27H77z" fill="#d0e0f0" stroke="#1c2733" stroke-width="1.2" stroke-linejoin="round"/><circle cx="18" cy="44" r="7" fill="#1c2733"/><circle cx="18" cy="44" r="2.5" fill="#fff"/><circle cx="56" cy="44" r="7" fill="#1c2733"/><circle cx="56" cy="44" r="2.5" fill="#fff"/><circle cx="88" cy="44" r="7" fill="#1c2733"/><circle cx="88" cy="44" r="2.5" fill="#fff"/><rect x="97" y="33" width="8" height="4.5" fill="#fff" stroke="#1c2733" stroke-width="1"/></g>
+<g id="i-box"><rect x="1" y="1" width="26" height="26" rx="2" fill="#f3e2c0" stroke="#1c2733" stroke-width="1.6"/><path d="M14 1v26M1 14h26" stroke="#c9a96a" stroke-width="2"/></g>
+<g id="i-doc"><path d="M2 2h22l8 8v30H2z" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><path d="M24 2v8h8" fill="none" stroke="#1c2733" stroke-width="1.6"/><rect x="8" y="16" width="18" height="2" fill="#808080"/><rect x="8" y="22" width="18" height="2" fill="#808080"/><rect x="8" y="28" width="12" height="2" fill="#808080"/></g>
+<g id="i-sig1"><path d="M5 37c2-7 3 2 5-2s3 2 5-3" fill="none" stroke="#3470ac" stroke-width="2" stroke-linecap="round"/></g>
+<g id="i-sig2"><path d="M19 37c2-6 3 3 5-1s3 1 5-4" fill="none" stroke="#3470ac" stroke-width="2" stroke-linecap="round"/></g>
+<g id="i-pen"><rect x="-1.8" y="-9" width="3.6" height="11" rx="0.8" fill="#3470ac" stroke="#1c2733" stroke-width="0.8"/><path d="M-1.8 2L0 6.5 1.8 2z" fill="#1c2733"/><rect x="-1.8" y="-9" width="3.6" height="2.2" fill="#fdf1b9" stroke="#1c2733" stroke-width="0.8"/></g>
+<g id="i-monitor"><rect x="1" y="1" width="58" height="38" rx="3" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><rect x="5" y="5" width="50" height="30" fill="#d0e0f0"/><rect x="25" y="39" width="10" height="5" fill="#1c2733"/><rect x="15" y="44" width="30" height="3" rx="1" fill="#1c2733"/></g>
+<g id="i-key"><circle cx="9" cy="9" r="7" fill="#fdf1b9" stroke="#1c2733" stroke-width="1.6"/><circle cx="9" cy="9" r="2.5" fill="#fff" stroke="#1c2733" stroke-width="1.2"/><path d="M14 14l15 15M25 25l-3 3M29 29l-3 3" fill="none" stroke="#1c2733" stroke-width="2.2" stroke-linecap="round"/></g>
+<g id="i-log"><use xlink:href="#i-doc"/><circle cx="27" cy="34" r="8" fill="#fff" stroke="#1c2733" stroke-width="1.4"/><path d="M27 34V29M27 34h4" fill="none" stroke="#1c2733" stroke-width="1.4" stroke-linecap="round"/></g>
+<g id="i-server"><rect x="1" y="1" width="36" height="52" rx="3" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><path d="M1 18.5h36M1 36h36" stroke="#1c2733" stroke-width="1.2"/><rect x="6" y="7" width="16" height="5" rx="1" fill="#e5e5e5"/><rect x="6" y="24.5" width="16" height="5" rx="1" fill="#e5e5e5"/><rect x="6" y="42" width="16" height="5" rx="1" fill="#e5e5e5"/><circle cx="30" cy="9.5" r="2.2" fill="#7dbb3d"/><circle cx="30" cy="27" r="2.2" fill="#7dbb3d"/><circle cx="30" cy="44.5" r="2.2" fill="#7dbb3d"/></g>
+<g id="i-trash"><rect x="3" y="6" width="18" height="22" rx="2" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><rect x="0" y="3" width="24" height="3" rx="1" fill="#1c2733"/><rect x="8" y="0" width="8" height="3" rx="1" fill="#1c2733"/><path d="M8 11v12M12 11v12M16 11v12" stroke="#808080" stroke-width="1.6"/></g>
+<g id="i-car"><path d="M14 20L22 8h32l8 12z" fill="#d0e0f0" stroke="#1c2733" stroke-width="1.6" stroke-linejoin="round"/><rect x="1" y="20" width="74" height="18" rx="4" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><rect x="2.5" y="27" width="71" height="5" fill="#3470ac"/><rect x="30" y="3" width="16" height="5" rx="1.5" fill="#3470ac" stroke="#1c2733" stroke-width="1"/><rect x="3" y="22.5" width="6" height="3" fill="#fdf1b9" stroke="#1c2733" stroke-width="0.8"/><rect x="67" y="22.5" width="6" height="3" fill="#e6c4c2" stroke="#1c2733" stroke-width="0.8"/><circle cx="16" cy="38" r="6.5" fill="#1c2733"/><circle cx="16" cy="38" r="2.3" fill="#fff"/><circle cx="60" cy="38" r="6.5" fill="#1c2733"/><circle cx="60" cy="38" r="2.3" fill="#fff"/></g>
+<g id="i-check"><path d="M0 3l3 3 6-7" fill="none" stroke="#7dbb3d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></g>
+<g id="i-tablet"><rect x="1" y="1" width="58" height="80" rx="5" fill="#fff" stroke="#1c2733" stroke-width="1.6"/><rect x="5" y="7" width="50" height="66" rx="2" fill="#fff" stroke="#e2e6ea"/><rect x="5" y="7" width="50" height="10" fill="#3470ac"/><text style="font-size:6.5px;font-weight:700;fill:#fff" x="30" y="14.5" font-size="6.5" font-weight="700" fill="#fff" text-anchor="middle">eFTI data set</text><rect x="9" y="23" width="26" height="3" rx="1" fill="#808080"/><rect x="9" y="33" width="20" height="3" rx="1" fill="#808080"/><rect x="9" y="43" width="28" height="3" rx="1" fill="#808080"/><rect x="9" y="53" width="18" height="3" rx="1" fill="#808080"/><rect x="9" y="63" width="24" height="3" rx="1" fill="#808080"/><use xlink:href="#i-check" x="43" y="22"/><use xlink:href="#i-check" x="43" y="32"/><use xlink:href="#i-check" x="43" y="42"/><use xlink:href="#i-check" x="43" y="52"/><use xlink:href="#i-check" x="43" y="62"/><circle cx="30" cy="77" r="1.6" fill="#1c2733"/></g>
+<pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="8" height="8" fill="#f6f7f9"/><rect width="1.5" height="8" fill="#b0b7be"/></pattern>
+<marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0L10 5 0 10z" fill="#3470ac"/></marker>
+</defs>
+
+
+<rect x="466.5" y="0.5" width="413" height="239" rx="7" fill="#f6f7f9" stroke="#e2e6ea"/>
+<text style="font-size:11.5px;font-weight:700;fill:#1c2733" x="673" y="18" font-size="11.5" font-weight="700" fill="#1c2733" text-anchor="middle">Platform-internal Processes</text>
+
+<g transform="translate(489,30) scale(0.85)"><use xlink:href="#i-person"/></g>
+<g transform="translate(529,40) scale(0.85)"><use xlink:href="#i-monitor"/></g>
+<text style="font-size:11.5px;fill:#1c2733" x="535" y="108" font-size="11.5" fill="#1c2733" text-anchor="middle">Data Entry</text>
+
+<g transform="translate(616,38) scale(0.8)"><use xlink:href="#i-truck"/></g>
+<g transform="translate(704,60) scale(0.9)"><use xlink:href="#i-box"/></g>
+<text style="font-size:11.5px;fill:#1c2733" x="673" y="108" font-size="11.5" fill="#1c2733" text-anchor="middle">Transport Operations</text>
+
+<g transform="translate(775,32) scale(1.3)"><use xlink:href="#i-doc"/><use xlink:href="#i-sig1"/><use xlink:href="#i-sig2"/></g>
+<g transform="translate(835,74) scale(1.8) rotate(45)"><use xlink:href="#i-pen"/></g>
+<text style="font-size:11.5px;fill:#1c2733" x="811" y="108" font-size="11.5" fill="#1c2733" text-anchor="middle">Signatures</text>
+
+<g transform="translate(483,138) scale(0.7)"><use xlink:href="#i-person"/></g>
+<g transform="translate(513,138) scale(0.7)"><use xlink:href="#i-person"/></g>
+<g transform="translate(549,150) scale(1.1)"><use xlink:href="#i-key"/></g>
+<text style="font-size:11.5px;fill:#1c2733" x="535" y="208" font-size="11.5" fill="#1c2733" text-anchor="middle">User Management</text>
+
+<g transform="translate(649,132) scale(1.3)"><use xlink:href="#i-log"/></g>
+<text style="font-size:11.5px;fill:#1c2733" x="673" y="208" font-size="11.5" fill="#1c2733" text-anchor="middle">Audit Log</text>
+
+<g transform="translate(771,132) scale(1.05)"><use xlink:href="#i-server"/></g>
+<g transform="translate(821,154) scale(1.2)"><use xlink:href="#i-trash"/></g>
+<text style="font-size:11.5px;fill:#1c2733" x="811" y="208" font-size="11.5" fill="#1c2733" text-anchor="middle">Storage &amp; Deletion</text>
+
+
+<rect x="442" y="0" width="16" height="240" fill="url(#hatch)" stroke="#6b7885" stroke-width="1"/>
+<rect x="440" y="64" width="20" height="12" rx="2" fill="#fff" stroke="#1c2733" stroke-width="1.2"/>
+<rect x="440" y="114" width="20" height="12" rx="2" fill="#fff" stroke="#1c2733" stroke-width="1.2"/>
+<rect x="440" y="164" width="20" height="12" rx="2" fill="#fff" stroke="#1c2733" stroke-width="1.2"/>
+
+<line x1="274" y1="70" x2="436" y2="70" stroke="#3470ac" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text style="font-size:11px;fill:#1c2733" x="355" y="62" font-size="11" fill="#1c2733" text-anchor="middle">Identifier upload &amp; search</text>
+<line x1="274" y1="120" x2="436" y2="120" stroke="#3470ac" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text style="font-size:11px;fill:#1c2733" x="355" y="112" font-size="11" fill="#1c2733" text-anchor="middle">eFTI data set (CMDS)</text>
+<line x1="274" y1="170" x2="436" y2="170" stroke="#3470ac" stroke-width="2" marker-start="url(#ah)" marker-end="url(#ah)"/>
+<text style="font-size:11px;fill:#1c2733" x="355" y="162" font-size="11" fill="#1c2733" text-anchor="middle">Follow-up communication</text>
+
+<rect x="210" y="40" width="60" height="160" rx="6" fill="#d0e0f0" stroke="#3470ac" stroke-width="1.5"/>
+<text style="font-size:14px;font-weight:700;fill:#1c2733" x="240" y="116" font-size="14" font-weight="700" fill="#1c2733" text-anchor="middle">eFTI</text>
+<text style="font-size:14px;font-weight:700;fill:#1c2733" x="240" y="134" font-size="14" font-weight="700" fill="#1c2733" text-anchor="middle">Gate</text>
+
+
+<rect x="20" y="0" width="180" height="82" fill="#e5e5e5"/>
+<line x1="20" y1="41" x2="200" y2="41" stroke="#fff" stroke-width="2" stroke-dasharray="10 8"/>
+<g transform="translate(37,2) scale(0.7)"><use xlink:href="#i-truck"/></g>
+<g transform="translate(126,45) scale(0.75)"><use xlink:href="#i-car"/></g>
+
+<line x1="206" y1="120" x2="178" y2="120" stroke="#3470ac" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#ah)"/>
+<g transform="translate(112,90)"><use xlink:href="#i-tablet"/></g>
+<g transform="translate(72,108) scale(0.9)"><use xlink:href="#i-officer"/></g>
+<text style="font-size:11.5px;font-weight:700;fill:#1c2733" x="122" y="200" font-size="11.5" font-weight="700" fill="#1c2733" text-anchor="middle">Roadside Check</text>
+</svg>
+
+<path class="link" d="M227 448 L227 470" marker-end="url(#arrow)"/><path class="link" d="M673 448 L673 470" marker-end="url(#arrow)"/>
+<g class="c-green"><rect x="20" y="474" width="414" height="104" rx="6"/><text x="227" text-anchor="middle" y="498" class="t-head">Automated test suite</text><text x="34" y="520">test runner checks the interface from the outside;</text><text x="34" y="537">test cases with their legal references</text><text x="34" y="554">→ machine-generated test report</text></g>
+<g class="c-green"><rect x="466" y="474" width="414" height="104" rx="6"/><text x="673" text-anchor="middle" y="498" class="t-head">Requirements checklist</text><text x="480" y="520">requirements that cannot be tested from the outside,</text><text x="480" y="537">with their legal references</text><text x="480" y="554">→ informative, for the platform's own review</text></g>
+</svg>

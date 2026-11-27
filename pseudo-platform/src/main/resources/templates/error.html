@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>eFTI pseudo platform - error</title>
+    <style>
+        body { font-family: system-ui, sans-serif; margin: 1.5rem auto; max-width: 80rem; padding: 0 1rem; color: #222; }
+    </style>
+</head>
+<body>
+<h1>Something went wrong</h1>
+<p>
+    The pseudo platform could not show <code th:text="${path}"></code>
+    (<span th:text="${status} + ' ' + ${error}"></span>).
+</p>
+<p>The details are in the log: <code>docker compose logs pseudo-platform</code> (in <code>deploy/</code>).</p>
+<p><a th:href="@{/}">Back to the pseudo platform</a></p>
+</body>
+</html>
